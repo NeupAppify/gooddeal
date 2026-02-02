@@ -1,26 +1,114 @@
 @import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@theme {
+  --color-russian-purple: #32174D;
+  --color-charcoal: #1C1C1E;
+  --color-platinum: #F5F4F7;
+  --color-warm-gray: #8E8E93;
+  --color-sage: #2F6F5E;
+
+  --font-serif: var(--font-outfit);
+  --font-sans: var(--font-outfit);
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F5F4F7;
+  --foreground: #1C1C1E;
+  --primary: #32174D;
+  --secondary: #1C1C1E;
+  --accent: #2F6F5E;
+  --muted: #8E8E93;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    @apply bg-platinum text-charcoal antialiased font-sans;
+    font-family: var(--font-outfit);
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-serif {
+    @apply font-sans font-normal;
+    font-family: var(--font-outfit);
+    color: var(--secondary);
+  }
+
+  p,
+  span,
+  div,
+  .font-sans {
+    @apply font-sans;
+    font-family: var(--font-outfit);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Typography Rules */
+  article p {
+    max-width: 680px;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  article h2,
+  article h3,
+  article h4 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  article img {
+    border-radius: 0.75rem; /* rounded-xl */
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .max-w-prose {
+    max-width: 680px;
+    line-height: 1.75;
   }
 }
 
-body {
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-russian-purple text-white px-8 py-3 rounded-[6px] transition-all duration-300 hover:bg-[#251138] hover:shadow-lg active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center border border-russian-purple text-russian-purple px-8 py-3 rounded-[6px] transition-all duration-300 hover:bg-russian-purple/5 active:scale-[0.98];
+  }
+
+  .card-premium {
+    @apply bg-white rounded-lg shadow-sm border border-black/5 hover:shadow-md transition-shadow duration-300;
+  }
+
+  .trust-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 bg-sage text-white text-xs font-medium rounded-full;
+  }
+}
+
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }
