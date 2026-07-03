@@ -1,20 +1,24 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
+import { getPropertyBySlug } from "@/src/lib/properties";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Bed, Bath, Square, CheckCircle, ArrowLeft, Phone } from "lucide-react";
+import { notFound } from "next/navigation";
+import { MapPin, Building2, CheckCircle, ArrowLeft, Phone, Tag, Home } from "lucide-react";
 
-export default function PropertyDetailPage() {
-  // Mock data - would normally fetch based on params.slug
-  const property = {
-    title: "Modern Villa in Budhanilkantha",
-    price: "Rs. 5.2 Cr",
-    location: "Budhanilkantha, Kathmandu",
-    specs: { beds: 5, baths: 4, area: "2400 sqft", land: "12 Aana", parking: "2 Cars", facing: "South-East" },
-    desc: "A stunning contemporary villa located in the serene heights of Budhanilkantha. Featuring floor-to-ceiling windows, a modular kitchen, and a landscaped garden. This property has passed our full 50-point legal verification.",
-    images: ["/hero.png", "/hero.png", "/hero.png"],
-    features: ["Modular Kitchen", "Parquet Flooring", "Solar Water", "Security System", "Garden", "Water Tank"]
-  };
+interface PropertyDetailPageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
+
+export default async function PropertyDetailPage({ params }: PropertyDetailPageProps) {
+  const { slug } = await params;
+  const property = await getPropertyBySlug(slug);
+
+  if (!property) {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -63,35 +67,43 @@ export default function PropertyDetailPage() {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-y border-platinum mb-10">
                   <div className="text-center p-4 bg-platinum/30 rounded">
-                    <Bed className="w-6 h-6 text-warm-gray mx-auto mb-2" />
-                    <div className="font-semibold text-charcoal">{property.specs.beds} Beds</div>
+                    <Tag className="w-6 h-6 text-warm-gray mx-auto mb-2" />
+                    <div className="font-semibold text-charcoal">{property.purpose}</div>
                   </div>
                   <div className="text-center p-4 bg-platinum/30 rounded">
-                    <Bath className="w-6 h-6 text-warm-gray mx-auto mb-2" />
-                    <div className="font-semibold text-charcoal">{property.specs.baths} Baths</div>
+                    <Home className="w-6 h-6 text-warm-gray mx-auto mb-2" />
+                    <div className="font-semibold text-charcoal">{property.category}</div>
                   </div>
                   <div className="text-center p-4 bg-platinum/30 rounded">
-                    <Square className="w-6 h-6 text-warm-gray mx-auto mb-2" />
-                    <div className="font-semibold text-charcoal">{property.specs.area}</div>
+                    <Building2 className="w-6 h-6 text-warm-gray mx-auto mb-2" />
+                    <div className="font-semibold text-charcoal">{property.type}</div>
                   </div>
                    <div className="text-center p-4 bg-platinum/30 rounded">
-                    <Square className="w-6 h-6 text-warm-gray mx-auto mb-2" />
-                    <div className="font-semibold text-charcoal">{property.specs.land}</div>
+                    <CheckCircle className="w-6 h-6 text-warm-gray mx-auto mb-2" />
+                    <div className="font-semibold text-charcoal">{property.status}</div>
                   </div>
                 </div>
 
                 <div className="mb-12">
                   <h3 className="text-2xl font-serif mb-6">Description</h3>
-                  <p className="text-warm-gray leading-relaxed text-lg">{property.desc}</p>
+                  <p className="text-warm-gray leading-relaxed text-lg">
+                    {property.title} is a {property.type.toLowerCase()} {property.category.toLowerCase()} listed for {property.purpose.toLowerCase()} in {property.location}.
+                    Contact Good Deal Advisory for viewing, verification, and transaction guidance.
+                  </p>
                 </div>
 
                 <div className="mb-12">
-                  <h3 className="text-2xl font-serif mb-6">Key Features</h3>
+                  <h3 className="text-2xl font-serif mb-6">Listing Details</h3>
                   <div className="grid grid-cols-2 gap-y-4">
-                    {property.features.map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2 text-warm-gray">
+                    {[
+                      `Reference: ${property.slug}`,
+                      `Agent: ${property.agent.name}`,
+                      `Updated: ${new Date(property.updatedAt).toLocaleDateString("en-US")}`,
+                      `Agency: Good Deal Advisory`,
+                    ].map((detail) => (
+                      <div key={detail} className="flex items-center gap-2 text-warm-gray">
                         <div className="w-2 h-2 rounded-full bg-russian-purple" />
-                        {feat}
+                        {detail}
                       </div>
                     ))}
                   </div>

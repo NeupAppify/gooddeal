@@ -3,9 +3,12 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import Link from "next/link";
 import PropertyCard from "@/src/components/PropertyCard";
+import { getFeaturedProperties } from "@/src/lib/properties";
 import { ArrowRight, ShieldCheck, Scale, FileText, Search, Home as HomeIcon, Building } from "lucide-react";
 
-export default function Home() {
+export default async function Home() {
+  const featuredProperties = await getFeaturedProperties();
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -35,18 +38,20 @@ export default function Home() {
               </h1>
               
               {/* Search Box */}
-              <div className="bg-white p-2 rounded-full shadow-lg border border-platinum max-w-2xl mb-12 flex items-center">
+              <form action="/properties" method="GET" className="bg-white p-2 rounded-full shadow-lg border border-platinum max-w-2xl mb-12 flex items-center">
                  <div className="flex-grow px-6 py-2">
                     <input 
                       type="text" 
+                      name="query"
+                      required
                       placeholder="Search by location, property type, or price..." 
                       className="w-full outline-none text-charcoal placeholder:text-warm-gray text-lg"
                     />
                  </div>
-                 <button className="bg-russian-purple text-white p-3 rounded-full hover:bg-[#251138] transition-colors">
+                 <button type="submit" aria-label="Search properties" className="bg-russian-purple text-white p-3 rounded-full hover:bg-[#251138] transition-colors">
                     <Search className="w-6 h-6" />
                  </button>
-              </div>
+              </form>
 
               {/* Action Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mb-12">
@@ -108,38 +113,15 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  id: "1",
-                  title: "Modern Villa in Budhanilkantha",
-                  price: "Rs. 5.2 Cr",
-                  location: "Budhanilkantha, Kathmandu",
-                  specs: { beds: 5, baths: 4, area: "2400 sqft" },
-                  image: "/hero.png", // Using placeholder
-                  verified: true,
-                },
-                {
-                  id: "2",
-                  title: "Premium Apartment in Jhamsikhel",
-                  price: "Rs. 3.5 Cr",
-                  location: "Jhamsikhel, Lalitpur",
-                  specs: { beds: 3, baths: 3, area: "1600 sqft" },
-                  image: "/hero.png",
-                  verified: true,
-                },
-                {
-                  id: "3",
-                  title: "Commercial Land in Naxal",
-                  price: "Rs. 12 Cr",
-                  location: "Naxal, Kathmandu",
-                  specs: { beds: 0, baths: 0, area: "10 Aana" },
-                  image: "/hero.png",
-                  verified: true,
-                },
-              ].map((prop) => (
+              {featuredProperties.map((prop) => (
                 <PropertyCard key={prop.id} {...prop} />
               ))}
             </div>
+            {featuredProperties.length === 0 && (
+              <div className="border border-platinum bg-white px-6 py-12 text-center text-warm-gray">
+                No featured properties are available right now.
+              </div>
+            )}
           </div>
         </section>
 

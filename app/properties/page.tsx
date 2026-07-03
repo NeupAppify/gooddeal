@@ -1,6 +1,7 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import PropertyCard from "@/src/components/PropertyCard";
+import { filterProperties, getProperties } from "@/src/lib/properties";
 import { Filter } from "lucide-react";
 import { Metadata } from "next";
 
@@ -9,55 +10,17 @@ export const metadata: Metadata = {
   description: "Browse our curated list of legally verified properties in Kathmandu and Lalitpur.",
 };
 
-const properties = [
-  {
-    id: "1",
-    title: "Modern Villa in Budhanilkantha",
-    price: "Rs. 5.2 Cr",
-    location: "Budhanilkantha, Kathmandu",
-    specs: { beds: 5, baths: 4, area: "2400 sqft" },
-    image: "/hero.png",
-    verified: true,
-  },
-  {
-    id: "2",
-    title: "Premium Apartment in Jhamsikhel",
-    price: "Rs. 3.5 Cr",
-    location: "Jhamsikhel, Lalitpur",
-    specs: { beds: 3, baths: 3, area: "1600 sqft" },
-    image: "/hero.png",
-    verified: true,
-  },
-  {
-    id: "3",
-    title: "Commercial Land in Naxal",
-    price: "Rs. 12 Cr",
-    location: "Naxal, Kathmandu",
-    specs: { beds: 0, baths: 0, area: "10 Aana" },
-    image: "/hero.png",
-    verified: true,
-  },
-  {
-    id: "4",
-    title: "Residential Plot in Bhaisepati",
-    price: "Rs. 65 Lakh / Aana",
-    location: "Bhaisepati, Lalitpur",
-    specs: { beds: 0, baths: 0, area: "8 Aana" },
-    image: "/hero.png",
-    verified: true,
-  },
-  {
-    id: "5",
-    title: "Colonial House in Lazimpat",
-    price: "Rs. 8.5 Cr",
-    location: "Lazimpat, Kathmandu",
-    specs: { beds: 6, baths: 5, area: "3200 sqft" },
-    image: "/hero.png",
-    verified: true,
-  }
-];
+interface PropertiesPageProps {
+  searchParams: Promise<{
+    query?: string;
+  }>;
+}
 
-export default function PropertiesPage() {
+export default async function PropertiesPage({ searchParams }: PropertiesPageProps) {
+  const { query } = await searchParams;
+  const properties = await getProperties();
+  const filteredProperties = filterProperties(properties, query);
+
   return (
     <div className="min-h-screen flex flex-col ">
       <Header />
@@ -68,7 +31,9 @@ export default function PropertiesPage() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <div>
                 <h1 className="text-3xl font-serif text-charcoal">Verified Properties</h1>
-                <p className="text-warm-gray text-sm mt-1">Showing {properties.length} Listings</p>
+                <p className="text-warm-gray text-sm mt-1">
+                  Showing {filteredProperties.length} {query ? `results for "${query}"` : "Listings"}
+                </p>
               </div>
               
               <div className="flex items-center gap-4 w-full md:w-auto">
@@ -88,10 +53,15 @@ export default function PropertiesPage() {
         <section className="py-16 bg-white">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {properties.map((prop) => (
+              {filteredProperties.map((prop) => (
                 <PropertyCard key={prop.id} {...prop} />
               ))}
             </div>
+            {filteredProperties.length === 0 && (
+              <div className="border border-platinum bg-platinum/20 px-6 py-12 text-center text-warm-gray">
+                {query ? `No properties matched "${query}".` : "No properties are available right now."}
+              </div>
+            )}
           </div>
         </section>
       </main>

@@ -1,18 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Bed, Bath, Square, CheckCircle } from "lucide-react";
+import { MapPin, Building2, Home, Tag, CheckCircle } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 
 interface PropertyCardProps {
-  id: string;
+  slug: string;
   title: string;
   price: string;
   location: string;
-  specs: {
-    beds: number;
-    baths: number;
-    area: string;
-  };
+  purpose: string;
+  category: string;
+  type: string;
   image: string;
   verified?: boolean;
   agent?: {
@@ -23,11 +21,13 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({
-  id,
+  slug,
   title,
   price,
   location,
-  specs,
+  purpose,
+  category,
+  type,
   image,
   verified = false,
   agent = {
@@ -37,7 +37,7 @@ const PropertyCard = ({
   className,
 }: PropertyCardProps) => {
   return (
-    <Link href={`/properties/${id}`} className={cn("card-premium group overflow-hidden flex flex-col block", className)}>
+    <Link href={`/properties/${slug}`} className={cn("card-premium group overflow-hidden flex flex-col block", className)}>
       <div className="relative aspect-[4/3] overflow-hidden bg-platinum">
         <Image
           src={image}
@@ -81,17 +81,17 @@ const PropertyCard = ({
 
         <div className="flex items-center justify-between pt-4 border-t border-platinum mt-auto">
           <div className="flex items-center gap-4 text-sm text-charcoal/80">
-            <div className="flex items-center gap-1.5" title={`${specs.beds} Bedrooms`}>
-              <Bed className="w-4 h-4 text-warm-gray" />
-              <span>{specs.beds}</span>
+            <div className="flex items-center gap-1.5" title="Listing purpose">
+              <Tag className="w-4 h-4 text-warm-gray" />
+              <span>{purpose}</span>
             </div>
-            <div className="flex items-center gap-1.5" title={`${specs.baths} Bathrooms`}>
-              <Bath className="w-4 h-4 text-warm-gray" />
-              <span>{specs.baths}</span>
+            <div className="flex items-center gap-1.5" title="Property category">
+              <Home className="w-4 h-4 text-warm-gray" />
+              <span>{category}</span>
             </div>
-            <div className="flex items-center gap-1.5" title="Total Area">
-              <Square className="w-4 h-4 text-warm-gray" />
-              <span>{specs.area}</span>
+            <div className="flex items-center gap-1.5" title="Property type">
+              <Building2 className="w-4 h-4 text-warm-gray" />
+              <span>{type}</span>
             </div>
           </div>
         </div>
