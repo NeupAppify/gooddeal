@@ -35,7 +35,9 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
         <PropertyGallery images={property.images} title={property.title} />
 
-        <section className="py-12 md:py-20">
+        <div className="border-t border-platinum" />
+
+        <section className="pt-10 pb-12 md:pt-14 md:pb-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
               

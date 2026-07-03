@@ -66,7 +66,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
 
   return (
     <>
-      <section className="pt-28 pb-8 bg-white">
+      <section className="pt-24 pb-4 bg-white">
         <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
           <div
             className={
@@ -79,7 +79,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
               type="button"
               onClick={() => openViewer(0)}
               className={`group relative overflow-hidden rounded-lg bg-platinum text-left ${
-                galleryImages.length === 1 ? "aspect-[16/8]" : "aspect-[16/10] lg:aspect-auto"
+                galleryImages.length === 1 ? "aspect-[16/6]" : "aspect-[16/7] lg:aspect-auto"
               }`}
             >
               <Image
@@ -107,7 +107,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
                       key={`${image}-${imageIndex}`}
                       type="button"
                       onClick={() => openViewer(imageIndex)}
-                      className="group relative aspect-[16/10] overflow-hidden rounded-lg bg-platinum"
+                      className="group relative aspect-[16/7] overflow-hidden rounded-lg bg-platinum"
                     >
                       <Image
                         src={image}
