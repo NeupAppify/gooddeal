@@ -1,7 +1,7 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
+import PropertyGallery from "@/src/components/PropertyGallery";
 import { getPropertyBySlug } from "@/src/lib/properties";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MapPin, Building2, CheckCircle, ArrowLeft, Phone, Tag, Home } from "lucide-react";
@@ -25,23 +25,15 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
       <Header />
       
       <main className="flex-grow bg-white">
-        {/* Gallery Hero */}
-        <section className="h-[60vh] relative bg-charcoal pt-24">
-          <Image 
-            src={property.images[0]} 
-            alt={property.title} 
-            fill 
-            className="object-cover opacity-90"
-            priority
-          />
-          <div className="absolute top-28 left-0 right-0 z-10">
-            <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
-              <Link href="/properties" className="inline-flex items-center gap-2 text-white bg-black/20 backdrop-blur-md px-4 py-2 rounded-full hover:bg-black/40 transition-colors text-sm">
-                <ArrowLeft className="w-4 h-4" /> Back to Listings
-              </Link>
-            </div>
+        <div className="absolute left-0 right-0 top-28 z-20">
+          <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
+            <Link href="/properties" className="inline-flex items-center gap-2 rounded-md bg-black/30 px-4 py-2 text-sm text-white backdrop-blur-md transition-colors hover:bg-black/50">
+              <ArrowLeft className="w-4 h-4" /> Back to Listings
+            </Link>
           </div>
-        </section>
+        </div>
+
+        <PropertyGallery images={property.images} title={property.title} />
 
         <section className="py-12 md:py-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
