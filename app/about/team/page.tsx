@@ -2,22 +2,30 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Mail, Phone } from "lucide-react";
+import { teamMembers } from "@/src/lib/team";
 
-const team = [
-  {
-    name: "Mukti Nath Nepal",
-    role: "Founder & CEO",
-    bio: "Specialized in high-value asset acquisition and legal compliance.",
-    image: "/hero.png" // placeholder
-  },
-  {
-    name: "Rashmi Nepal",
-    role: "Marketing & CSR",
-    bio: "Driving the brand's vision and community engagement initiatives.",
-    image: "/hero.png"
-  }
-];
+/*
+::neup.documentation::gooddeal-team-page
+::function TeamPage()
+::title Good Deal Team Page
+
+::public
+
+Renders the Good Deal team listing with member images, roles, and direct contact
+details.
+
+Links each card to the corresponding team member profile page.
+
+::returns
+::datatype JSX.Element
+
+The team page layout.
+
+::public end
+
+::end
+*/
 
 export default function TeamPage() {
   return (
@@ -37,8 +45,8 @@ export default function TeamPage() {
         <section className="py-24 bg-white">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {team.map((member, i) => (
-                <div key={i} className="group">
+              {teamMembers.map((member) => (
+                <Link key={member.slug} href={`/about/team/${member.slug}`} className="group block">
                   <div className="aspect-[3/4] relative overflow-hidden bg-platinum rounded-lg mb-6">
                     <Image 
                       src={member.image} 
@@ -48,9 +56,18 @@ export default function TeamPage() {
                     />
                   </div>
                   <h3 className="text-xl font-serif text-charcoal mb-1">{member.name}</h3>
-                  <p className="text-russian-purple text-sm font-medium uppercase tracking-wider mb-3">{member.role}</p>
-                  <p className="text-warm-gray text-sm leading-relaxed">{member.bio}</p>
-                </div>
+                  <p className="text-russian-purple text-sm font-medium uppercase tracking-wider mb-4">{member.role}</p>
+                  <div className="space-y-2 text-sm text-warm-gray">
+                    <p className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-russian-purple" />
+                      {member.phone}
+                    </p>
+                    <p className="flex items-center gap-2 break-all">
+                      <Mail className="w-4 h-4 text-russian-purple" />
+                      {member.email}
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
