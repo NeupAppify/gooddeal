@@ -1,6 +1,11 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Careers, Good Deal",
+};
 
 export default function CareersPage() {
   return (

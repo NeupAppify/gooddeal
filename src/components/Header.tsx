@@ -3,6 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
+const navItems = [
+    { label: "Services", href: "/services" },
+    { label: "Properties", href: "/properties" },
+    { label: "How It Works", href: "/how-it-works" },
+    { label: "Blogs", href: "/blog" },
+    { label: "About", href: "/about" },
+];
+
 const Header = () => {
     return (
         <header
@@ -21,14 +29,14 @@ const Header = () => {
                 </Link>
 
                 <nav className="hidden md:flex items-center gap-8">
-                    {["Services", "Properties", "How It Works", "Insights", "About"].map(
+                    {navItems.map(
                         (item) => (
                             <Link
-                                key={item}
-                                href={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                                key={item.href}
+                                href={item.href}
                                 className="text-charcoal font-sans text-sm font-medium hover:text-russian-purple transition-colors"
                             >
-                                {item}
+                                {item.label}
                             </Link>
                         )
                     )}

@@ -3,6 +3,7 @@ import Footer from "@/src/components/Footer";
 import PropertyGallery from "@/src/components/PropertyGallery";
 import { getPropertyBySlug } from "@/src/lib/properties";
 import Link from "next/link";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MapPin, Building2, CheckCircle, ArrowLeft, Phone, Tag, Home } from "lucide-react";
 
@@ -10,6 +11,15 @@ interface PropertyDetailPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+export async function generateMetadata({ params }: PropertyDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const property = await getPropertyBySlug(slug);
+
+  return {
+    title: property ? `${property.title}, Good Deal` : "Property, Good Deal",
+  };
 }
 
 export default async function PropertyDetailPage({ params }: PropertyDetailPageProps) {

@@ -2,9 +2,14 @@ import Image from "next/image";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import Link from "next/link";
+import { Metadata } from "next";
 import PropertyCard from "@/src/components/PropertyCard";
 import { getFeaturedProperties } from "@/src/lib/properties";
 import { ArrowRight, ShieldCheck, Scale, FileText, Search, Home as HomeIcon, Building } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Good Deal, #1 Real Estate Agency",
+};
 
 export default async function Home() {
   const featuredProperties = await getFeaturedProperties();

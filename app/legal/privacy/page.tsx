@@ -1,5 +1,10 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy, Good Deal",
+};
 
 export default function PrivacyPage() {
   return (

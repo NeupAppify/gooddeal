@@ -2,7 +2,12 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 import { ShieldCheck, Users, Target } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "About Us, Good Deal",
+};
 
 export default function AboutPage() {
   return (

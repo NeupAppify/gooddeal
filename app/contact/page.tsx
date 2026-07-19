@@ -1,6 +1,11 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
+import { Metadata } from "next";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Contact, Good Deal",
+};
 
 export default function ContactPage() {
   return (

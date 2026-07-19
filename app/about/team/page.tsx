@@ -2,8 +2,13 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 import { ArrowRight, Mail, Phone } from "lucide-react";
 import { teamMembers } from "@/src/lib/team";
+
+export const metadata: Metadata = {
+  title: "Our Team, Good Deal",
+};
 
 /*
 ::neup.documentation::gooddeal-team-page

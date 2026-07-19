@@ -1,5 +1,10 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "How it works, Good Deal",
+};
 
 const steps = [
     {

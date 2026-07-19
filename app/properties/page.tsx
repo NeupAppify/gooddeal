@@ -6,7 +6,7 @@ import { Filter } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Verified Properties | Good Deal Advisory",
+  title: "Properties, Good Deal",
   description: "Browse our curated list of legally verified properties in Kathmandu and Lalitpur.",
 };
 

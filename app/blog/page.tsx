@@ -1,7 +1,12 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import Link from "next/link";
+import { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Blogs, Good Deal",
+};
 
 const articles = [
   {
@@ -42,7 +47,7 @@ export default function BlogPage() {
       <main className="flex-grow">
         <section className="pt-44 pb-20 bg-platinum/30">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
-            <h1 className="text-5xl font-serif text-charcoal mb-6">Market Insights</h1>
+            <h1 className="text-5xl font-serif text-charcoal mb-6">Blogs and Market Insights</h1>
             <p className="text-lg text-warm-gray max-w-2xl mx-auto">
               Expert analysis, legal guides, and market updates to help you make informed decisions.
             </p>
