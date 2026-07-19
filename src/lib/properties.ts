@@ -140,15 +140,10 @@ function toProperty(property: SdkProperty): Property {
   };
 }
 
-  console.log("hello 2");
-
 export async function getProperties(): Promise<Property[]> {
-  console.log("hello 2");
   const response = await listEstateProperties({
     agencyId: GOODDEAL_AGENCY_ID,
   });
-  
-  console.log(response);
 
   const properties = response.ok && Array.isArray(response.body.properties) ? response.body.properties : [];
 

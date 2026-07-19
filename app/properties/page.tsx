@@ -40,7 +40,6 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
       "status",
     ],
   });
-  console.log(response);
   const properties = response.ok && Array.isArray(response.body.properties)
     ? response.body.properties.map((entry) => {
       const property = entry && typeof entry === "object" && !Array.isArray(entry) ? entry as Record<string, unknown> : {};
