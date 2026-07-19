@@ -10,3 +10,5 @@
 - [ ] Add Neup documentation blocks or folder README coverage for `src/components/PropertyCard.tsx`.
 - [ ] Add Neup documentation blocks or folder README coverage for `next.config.ts`.
 - [ ] Add Neup documentation blocks or folder README coverage for `package.json`.
+- [ ] Fix repo-wide typecheck baseline: `core/database/prisma.ts` imports missing `pg`, `@prisma/adapter-pg`, and `@prisma/client`.
+- [ ] Fix repo-wide typecheck baseline: `core/helpers/link.ts` and `core/helpers/navigation.ts` import missing in-app manage/auth modules.
