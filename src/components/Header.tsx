@@ -1,6 +1,5 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -74,13 +73,29 @@ const Header = () => {
 
                 <button
                     type="button"
-                    className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-[6px] border border-black/10 text-charcoal transition-colors hover:bg-russian-purple/5"
+                    className="group md:hidden inline-flex h-10 w-10 items-center justify-center rounded-[6px] border border-black/10 text-charcoal transition-all duration-300 ease-out hover:border-russian-purple/30 hover:bg-russian-purple/5 active:scale-95"
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isMenuOpen}
                     aria-controls="mobile-navigation"
                     onClick={() => setIsMenuOpen((current) => !current)}
                 >
-                    {isMenuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+                    <span className="relative h-4 w-5" aria-hidden="true">
+                        <span
+                            className={`absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition-all duration-300 ease-out group-hover:bg-russian-purple ${
+                                isMenuOpen ? "translate-y-[7px] rotate-45" : ""
+                            }`}
+                        />
+                        <span
+                            className={`absolute left-0 top-[7px] h-0.5 rounded-full bg-current transition-all duration-200 ease-out group-hover:bg-russian-purple ${
+                                isMenuOpen ? "w-0 opacity-0" : "w-5 opacity-100"
+                            }`}
+                        />
+                        <span
+                            className={`absolute left-0 top-[14px] h-0.5 w-5 rounded-full bg-current transition-all duration-300 ease-out group-hover:bg-russian-purple ${
+                                isMenuOpen ? "-translate-y-[7px] -rotate-45" : ""
+                            }`}
+                        />
+                    </span>
                 </button>
             </div>
 

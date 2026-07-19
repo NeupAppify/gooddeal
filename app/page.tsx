@@ -20,7 +20,7 @@ export default async function Home() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative min-h-[85vh] flex items-center bg-white overflow-hidden">
+        <section className="relative min-h-[85vh] flex items-start bg-white overflow-hidden pt-28 md:items-center md:pt-0">
            {/* Background Image with Opacity */}
            <div className="absolute inset-x-0 bottom-0 h-[65%] z-0 pointer-events-none">
              <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-white/80 to-white z-10" />
