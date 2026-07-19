@@ -1,17 +1,138 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import PropertyGallery from "@/src/components/PropertyGallery";
+import SpaceAccessCards from "@/src/components/SpaceAccessCards";
+import type { SpaceAccessCard, SpaceAccessCardKind } from "@/src/components/SpaceAccessCards";
 import { getPropertyBySlug } from "@/src/lib/properties";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MapPin, Building2, CheckCircle, ArrowLeft, Phone, Tag, Home } from "lucide-react";
+import {
+  ArrowLeft,
+  Building2,
+  CheckCircle,
+  Home,
+  MapPin,
+  Phone,
+  Tag,
+} from "lucide-react";
 
 interface PropertyDetailPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+function humanizeKey(key: string): string {
+  return key
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_-]+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function formatDetailValue(value: unknown): string {
+  if (value === null || value === undefined || value === "") return "";
+
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "";
+  }
+
+  if (typeof value === "number") {
+    return value === 0 ? "" : value.toLocaleString("en-US");
+  }
+
+  if (typeof value === "string") {
+    return value
+      .toLowerCase()
+      .split(/[\s_-]+/)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(formatDetailValue).filter(Boolean).join(", ");
+  }
+
+  return "";
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function getRecord(value: unknown): Record<string, unknown> {
+  return isRecord(value) ? value : {};
+}
+
+function getNestedRecord(record: Record<string, unknown>, key: string): Record<string, unknown> {
+  return getRecord(record[key]);
+}
+
+function getFirstDetailRecord(details: Record<string, unknown>, keys: string[]): Record<string, unknown> {
+  for (const key of keys) {
+    const value = getNestedRecord(details, key);
+    if (Object.keys(value).length > 0) return value;
+  }
+
+  return {};
+}
+
+function getDetailNumber(records: Record<string, unknown>[], key: string): number {
+  for (const record of records) {
+    const value = record[key];
+    if (typeof value === "number" && Number.isFinite(value) && value > 0) return value;
+  }
+
+  return 0;
+}
+
+function getDetailText(records: Record<string, unknown>[], key: string): string {
+  for (const record of records) {
+    const value = formatDetailValue(record[key]);
+    if (value) return value;
+  }
+
+  return "";
+}
+
+function numberCard(kind: SpaceAccessCardKind, label: string, value: number): SpaceAccessCard | null {
+  if (value <= 0) return null;
+
+  return {
+    kind,
+    label,
+    value: value.toLocaleString("en-US"),
+  };
+}
+
+function textCard(kind: SpaceAccessCardKind, label: string, value: string): SpaceAccessCard | null {
+  if (!value) return null;
+
+  return {
+    kind,
+    label,
+    value,
+  };
+}
+
+function measurementCard(
+  kind: "roadWidth" | "area",
+  label: string,
+  value: number,
+  unit: string,
+): SpaceAccessCard | null {
+  if (value <= 0) return null;
+
+  return {
+    kind,
+    label,
+    value: value.toLocaleString("en-US"),
+    rawValue: value,
+    unit,
+  };
 }
 
 export async function generateMetadata({ params }: PropertyDetailPageProps): Promise<Metadata> {
@@ -30,6 +151,33 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   if (!property) {
     notFound();
   }
+
+  const description = property.description || `${property.title} is a ${property.type.toLowerCase()} ${property.category.toLowerCase()} listed for ${property.purpose.toLowerCase()} in ${property.location}. Contact Good Deal Advisory for viewing, verification, and transaction guidance.`;
+  const activeDetails = getFirstDetailRecord(property.details, ["house", "apartment", "flat", "land", "space"]);
+  const specifics = getNestedRecord(property.details, "specifics");
+  const rooms = getNestedRecord(specifics, "rooms");
+  const space = getNestedRecord(specifics, "space");
+  const landDetails = getNestedRecord(property.details, "landDetails");
+  const detailSources = [activeDetails, rooms, space, landDetails];
+  const roadWidthUnit = property.roadAccess.roadWidthUnit || "ft";
+  const areaUnit = getDetailText(detailSources, "areaUnit") || "sqft";
+  const spaceAccessCards = [
+    numberCard("bedrooms", "Bedrooms", getDetailNumber(detailSources, "bedrooms")),
+    numberCard("bathrooms", "Bathrooms", getDetailNumber(detailSources, "bathrooms")),
+    numberCard("livingRooms", "Living Rooms", getDetailNumber(detailSources, "livingRooms")),
+    numberCard("kitchens", "Kitchens", getDetailNumber(detailSources, "kitchens")),
+    numberCard("diningRooms", "Dining Rooms", getDetailNumber(detailSources, "diningRooms")),
+    numberCard("floors", "Floors", getDetailNumber(detailSources, "floors")),
+    numberCard("carParking", "Car Parking", getDetailNumber(detailSources, "carParkingSpots")),
+    numberCard("bikeParking", "Bike Parking", getDetailNumber(detailSources, "bikeParkingSpots")),
+    measurementCard("roadWidth", "Road Width", property.roadAccess.roadWidth, roadWidthUnit),
+    textCard("roadType", "Road Type", property.roadAccess.roadType),
+    measurementCard("area", "Area", getDetailNumber(detailSources, "area"), areaUnit),
+    textCard("facing", "Facing", getDetailText(detailSources, "facing")),
+  ].filter((card): card is SpaceAccessCard => Boolean(card));
+  const locationParts = Object.entries(property.locationDetails.structured)
+    .map(([key, value]) => ({ label: humanizeKey(key), value }))
+    .filter((part) => part.value);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -70,49 +218,68 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-y border-platinum mb-10">
-                  <div className="text-center p-4 bg-platinum/30 rounded">
-                    <Tag className="w-6 h-6 text-warm-gray mx-auto mb-2" />
-                    <div className="font-semibold text-charcoal">{property.purpose}</div>
+                <div className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="rounded-lg border border-platinum bg-platinum/20 p-5">
+                    <div className="text-xs font-medium uppercase tracking-wider text-warm-gray">Purpose</div>
+                    <div className="mt-2 flex items-center gap-2 font-semibold text-charcoal">
+                      <Tag className="h-4 w-4 text-russian-purple" />
+                      {property.purpose}
+                    </div>
                   </div>
-                  <div className="text-center p-4 bg-platinum/30 rounded">
-                    <Home className="w-6 h-6 text-warm-gray mx-auto mb-2" />
-                    <div className="font-semibold text-charcoal">{property.category}</div>
+                  <div className="rounded-lg border border-platinum bg-platinum/20 p-5">
+                    <div className="text-xs font-medium uppercase tracking-wider text-warm-gray">Category</div>
+                    <div className="mt-2 flex items-center gap-2 font-semibold text-charcoal">
+                      <Home className="h-4 w-4 text-russian-purple" />
+                      {property.category}
+                    </div>
                   </div>
-                  <div className="text-center p-4 bg-platinum/30 rounded">
-                    <Building2 className="w-6 h-6 text-warm-gray mx-auto mb-2" />
-                    <div className="font-semibold text-charcoal">{property.type}</div>
-                  </div>
-                   <div className="text-center p-4 bg-platinum/30 rounded">
-                    <CheckCircle className="w-6 h-6 text-warm-gray mx-auto mb-2" />
-                    <div className="font-semibold text-charcoal">{property.status}</div>
+                  <div className="rounded-lg border border-platinum bg-platinum/20 p-5">
+                    <div className="text-xs font-medium uppercase tracking-wider text-warm-gray">Type</div>
+                    <div className="mt-2 flex items-center gap-2 font-semibold text-charcoal">
+                      <Building2 className="h-4 w-4 text-russian-purple" />
+                      {property.type}
+                    </div>
                   </div>
                 </div>
 
                 <div className="mb-12">
                   <h3 className="text-2xl font-serif mb-6">Description</h3>
                   <p className="text-warm-gray leading-relaxed text-lg">
-                    {property.title} is a {property.type.toLowerCase()} {property.category.toLowerCase()} listed for {property.purpose.toLowerCase()} in {property.location}.
-                    Contact Good Deal Advisory for viewing, verification, and transaction guidance.
+                    {description}
                   </p>
                 </div>
 
                 <div className="mb-12">
-                  <h3 className="text-2xl font-serif mb-6">Listing Details</h3>
-                  <div className="grid grid-cols-2 gap-y-4">
-                    {[
-                      `Reference: ${property.slug}`,
-                      `Agent: ${property.agent.name}`,
-                      `Updated: ${new Date(property.updatedAt).toLocaleDateString("en-US")}`,
-                      `Agency: Good Deal Advisory`,
-                    ].map((detail) => (
-                      <div key={detail} className="flex items-center gap-2 text-warm-gray">
-                        <div className="w-2 h-2 rounded-full bg-russian-purple" />
-                        {detail}
+                  <h3 className="text-2xl font-serif mb-5">Space & Access</h3>
+                  <SpaceAccessCards cards={spaceAccessCards} />
+                </div>
+
+                <div className="mb-12">
+                  <div className="mb-6 flex items-center justify-between gap-4">
+                    <h3 className="text-2xl font-serif">Location</h3>
+                    {property.locationDetails.geo && (
+                      <span className="text-sm text-warm-gray">{property.locationDetails.geo}</span>
+                    )}
+                  </div>
+                  <div className="rounded-lg border border-platinum bg-platinum/20 p-6">
+                    <div className="flex items-start gap-3">
+                      <MapPin className="mt-1 h-5 w-5 shrink-0 text-russian-purple" />
+                      <div>
+                        <div className="font-semibold text-charcoal">{property.location}</div>
+                        {locationParts.length > 0 && (
+                          <div className="mt-5 flex flex-wrap gap-2">
+                            {locationParts.map((part) => (
+                              <span key={part.label} className="rounded-md border border-platinum bg-white px-3 py-2 text-sm text-charcoal">
+                                <span className="text-warm-gray">{part.label}: </span>{part.value}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
+
               </div>
 
               {/* Sidebar */}
