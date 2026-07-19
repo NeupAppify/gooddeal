@@ -2,6 +2,7 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import PropertyGallery from "@/src/components/PropertyGallery";
 import { getPropertyBySlug } from "@/src/lib/properties";
+import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -118,6 +119,20 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
               <div className="lg:col-span-1">
                 <div className="bg-white border border-platinum rounded-xl p-8 sticky top-32 shadow-lg">
                   <h3 className="text-xl font-serif mb-6">Interested in this property?</h3>
+                  <div className="mb-6 flex items-center gap-4 rounded-lg bg-platinum/30 p-4">
+                    <div className="relative h-14 w-14 overflow-hidden rounded-full bg-platinum">
+                      <Image
+                        src={property.agent.image}
+                        alt={property.agent.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <div className="text-xs text-warm-gray">Listed by</div>
+                      <div className="font-medium text-charcoal">{property.agent.name}</div>
+                    </div>
+                  </div>
                   <p className="text-sm text-warm-gray mb-8">
                     Schedule a viewing with our advisory team. We will accompany you and provide a full briefing.
                   </p>

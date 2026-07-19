@@ -43,8 +43,13 @@ export interface Property {
 }
 
 type SdkProperty = Record<string, unknown>;
+type AgentProfile = {
+  displayName: string;
+  displayImage: string;
+};
 
 const GOODDEAL_AGENCY_ID = "e432db37-4d83-452e-bd89-d269fd9314e4";
+const ESTATE_ACCOUNT_LOOKUP_URL = "https://neupgroup.com/estate/bridge/api.v1/accounts/lookup";
 const FALLBACK_IMAGE = "/hero.png";
 
 function asRecord(value: unknown): Record<string, unknown> {
@@ -102,14 +107,61 @@ export function formatPropertyPrice(price: number): string {
   return `Rs. ${price.toLocaleString("en-US")}`;
 }
 
-function toProperty(property: SdkProperty): Property {
+async function lookupAgentProfile(
+  accountId: string,
+  cache: Map<string, Promise<AgentProfile | null>>,
+) {
+  if (!accountId) {
+    return null;
+  }
+
+  const cachedProfile = cache.get(accountId);
+
+  if (cachedProfile) {
+    return cachedProfile;
+  }
+
+  const profilePromise = fetch(`${ESTATE_ACCOUNT_LOOKUP_URL}?accountId=${encodeURIComponent(accountId)}`, {
+    cache: "no-store",
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        return null;
+      }
+
+      const body = asRecord(await response.json().catch(() => null));
+      const account = asRecord(body.account);
+      const displayName = asString(account.displayName);
+      const displayImage = asString(account.displayImage);
+
+      if (!displayName && !displayImage) {
+        return null;
+      }
+
+      return {
+        displayName,
+        displayImage,
+      };
+    })
+    .catch(() => null);
+
+  cache.set(accountId, profilePromise);
+
+  return profilePromise;
+}
+
+async function toProperty(
+  property: SdkProperty,
+  agentLookupCache: Map<string, Promise<AgentProfile | null>>,
+): Promise<Property> {
   const agency = asRecord(property.agency);
   const listedBy = asRecord(property.listedBy);
   const images = asStringList(property.images);
   const firstImage = images[0] ?? FALLBACK_IMAGE;
   const price = asNumber(property.price);
   const listingAgent = asString(property.listingAgent, asString(listedBy.id));
-  const agentName = asString(listedBy.displayName, listingAgent || asString(agency.name, "Good Deal Advisory"));
+  const agentProfile = await lookupAgentProfile(listingAgent, agentLookupCache);
+  const agentName = asString(agentProfile?.displayName, asString(listedBy.displayName, listingAgent || asString(agency.name, "Good Deal Advisory")));
 
   return {
     id: asString(property.id),
@@ -132,7 +184,7 @@ function toProperty(property: SdkProperty): Property {
     },
     agent: {
       name: agentName,
-      image: asString(listedBy.displayImage, FALLBACK_IMAGE),
+      image: asString(agentProfile?.displayImage, asString(listedBy.displayImage, FALLBACK_IMAGE)),
     },
     createdAt: asString(property.createdAt, new Date(0).toISOString()),
     updatedAt: asString(property.updatedAt, asString(property.createdAt, new Date(0).toISOString())),
@@ -143,11 +195,14 @@ function toProperty(property: SdkProperty): Property {
 export async function getProperties(): Promise<Property[]> {
   const response = await listEstateProperties({
     agencyId: GOODDEAL_AGENCY_ID,
+    limit: 15,
+    offset: 0,
   });
 
   const properties = response.ok && Array.isArray(response.body.properties) ? response.body.properties : [];
+  const agentLookupCache = new Map<string, Promise<AgentProfile | null>>();
 
-  return properties.map((property) => toProperty(asRecord(property)));
+  return Promise.all(properties.map((property) => toProperty(asRecord(property), agentLookupCache)));
 }
 
 export async function getFeaturedProperties(limit = 3): Promise<Property[]> {
