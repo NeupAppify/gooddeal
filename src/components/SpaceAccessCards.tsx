@@ -97,6 +97,10 @@ function formatNumber(value: number, maximumFractionDigits: number): string {
   });
 }
 
+function titleCase(value: string): string {
+  return value.replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
 function lengthToMeters(value: number, unit = "m"): number {
   const normalizedUnit = unit.toLowerCase();
 
@@ -148,14 +152,14 @@ function formatRopaniAanaPaisaDam(squareMeters: number): string {
   const dam = remainingDam - paisa * 4;
 
   return [
-    { value: ropani, unit: "ropani" },
-    { value: aana, unit: "aana" },
-    { value: paisa, unit: "paisa" },
-    { value: dam, unit: "daam" },
+    { value: ropani, unit: "Ropani" },
+    { value: aana, unit: "Aana" },
+    { value: paisa, unit: "Paisa" },
+    { value: dam, unit: "Daam" },
   ]
     .filter((part) => part.value > 0)
     .map((part) => `${part.value} ${part.unit}`)
-    .join(" ") || "0 daam";
+    .join(" ") || "0 Daam";
 }
 
 function formatKatthaDhur(squareMeters: number): string {
@@ -167,13 +171,13 @@ function formatKatthaDhur(squareMeters: number): string {
   const dhur = remainingDhur - kattha * 20;
 
   return [
-    { value: bigha, unit: "bigha" },
-    { value: kattha, unit: "kattha" },
-    { value: dhur, unit: "dhur" },
+    { value: bigha, unit: "Bigha" },
+    { value: kattha, unit: "Kattha" },
+    { value: dhur, unit: "Dhur" },
   ]
     .filter((part) => part.value > 0)
     .map((part) => `${part.value} ${part.unit}`)
-    .join(" ") || "0 dhur";
+    .join(" ") || "0 Dhur";
 }
 
 function getMeasurementValue(card: SpaceAccessCard, mode: UnitMode): string {
@@ -229,7 +233,7 @@ function translateDirection(value: string): string {
     return value;
   }
 
-  return translatedParts.join(" ");
+  return titleCase(translatedParts.join(" "));
 }
 
 interface SpaceAccessCardsProps {
