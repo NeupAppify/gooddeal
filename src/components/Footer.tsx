@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Facebook, Instagram, Youtube, Twitter, Linkedin, Mail, Phone } from "lucide-react";
@@ -8,12 +9,16 @@ const Footer = () => {
             <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     <div className="col-span-1 md:col-span-1">
-                        <Link href="/" className="flex items-center gap-2 mb-6">
-                            <div className="w-8 h-8 bg-russian-purple rounded flex items-center justify-center text-white font-serif italic text-xl">
-                                G
-                            </div>
-                            <span className="font-serif text-2xl tracking-tight text-white">
-                                Good Deal
+                        <Link href="/" className="flex flex-col items-start mb-6">
+                            <Image
+                                src="/logo.inverted.png"
+                                alt="Good Deal"
+                                width={316}
+                                height={36}
+                                className="h-[22px] w-auto"
+                            />
+                            <span className="mt-1 text-xs font-medium leading-none text-warm-gray">
+                                Invest in your Future
                             </span>
                         </Link>
                         <p className="text-warm-gray text-sm leading-relaxed max-w-xs mb-6">
