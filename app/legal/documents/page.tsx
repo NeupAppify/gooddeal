@@ -1,6 +1,6 @@
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
-import { legalDocuments } from "@/core/legal-documents";
+import { legalDocuments } from "@/services/legal-documents";
 import { ArrowRight, FileText } from "lucide-react";
 import Link from "next/link";
 

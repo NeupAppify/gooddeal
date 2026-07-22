@@ -1,4 +1,4 @@
-import { getLegalDocument } from "@/core/legal-documents";
+import { getLegalDocument } from "@/services/legal-documents";
 import LegalDocumentViewer from "@/src/components/LegalDocumentViewer";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";

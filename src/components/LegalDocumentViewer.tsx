@@ -1,4 +1,3 @@
-import type { LegalDocument } from "@/core/legal-documents";
 import Footer from "@/src/components/Footer";
 import Header from "@/src/components/Header";
 import { ArrowLeft, BadgeCheck, Building2, FileText } from "lucide-react";
@@ -6,7 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 
 type LegalDocumentViewerProps = {
-  document: LegalDocument;
+  document: {
+    title: string;
+    description: string;
+    image: {
+      src: string;
+      width: number;
+      height: number;
+      alt: string;
+    };
+    issuedBy: string;
+    documentType: string;
+  };
 };
 
 export default function LegalDocumentViewer({ document }: LegalDocumentViewerProps) {
