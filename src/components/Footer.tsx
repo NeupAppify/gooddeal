@@ -43,13 +43,13 @@ const Footer = () => {
                             <a href="https://instagram.com/gooddealnp" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-russian-purple transition-colors">
                                 <Instagram className="w-4 h-4" />
                             </a>
-                            <a href="https://youtube.com/@gooddealnp" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-russian-purple transition-colors">
+                            <a href="https://www.youtube.com/@gooddealnprealestate" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-russian-purple transition-colors">
                                 <Youtube className="w-4 h-4" />
                             </a>
                             <a href="https://twitter.com/gooddealnp" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-russian-purple transition-colors">
                                 <Twitter className="w-4 h-4" />
                             </a>
-                            <a href="https://linkedin.com/company/gooddealnp" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-russian-purple transition-colors">
+                            <a href="https://www.linkedin.com/company/good-deal-pvt-ltd/" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-russian-purple transition-colors">
                                 <Linkedin className="w-4 h-4" />
                             </a>
                         </div>
