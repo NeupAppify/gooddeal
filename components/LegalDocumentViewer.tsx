@@ -1,5 +1,5 @@
-import Footer from "@/src/components/Footer";
-import Header from "@/src/components/Header";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import { ArrowLeft, BadgeCheck, Building2, FileText } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

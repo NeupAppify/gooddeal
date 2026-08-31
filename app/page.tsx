@@ -1,10 +1,10 @@
 import Image from "next/image";
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Link from "next/link";
 import { Metadata } from "next";
-import PropertyCard from "@/src/components/PropertyCard";
-import { getFeaturedProperties } from "@/src/lib/properties";
+import PropertyCard from "@/components/PropertyCard";
+import { getFeaturedProperties } from "@/lib/properties";
 import { ArrowRight, ShieldCheck, Scale, FileText, Search, Home as HomeIcon, Building } from "lucide-react";
 
 export const metadata: Metadata = {

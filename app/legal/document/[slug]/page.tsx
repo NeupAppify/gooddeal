@@ -1,5 +1,5 @@
 import { getLegalDocument, legalDocuments } from "@/services/legal-documents";
-import LegalDocumentViewer from "@/src/components/LegalDocumentViewer";
+import LegalDocumentViewer from "@/components/LegalDocumentViewer";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 

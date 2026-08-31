@@ -1,9 +1,9 @@
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
-import PropertyGallery from "@/src/components/PropertyGallery";
-import SpaceAccessCards from "@/src/components/SpaceAccessCards";
-import type { SpaceAccessCard, SpaceAccessCardKind } from "@/src/components/SpaceAccessCards";
-import { getPropertyBySlug } from "@/src/lib/properties";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import PropertyGallery from "@/components/PropertyGallery";
+import SpaceAccessCards from "@/components/SpaceAccessCards";
+import type { SpaceAccessCard, SpaceAccessCardKind } from "@/components/SpaceAccessCards";
+import { getPropertyBySlug } from "@/lib/properties";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";

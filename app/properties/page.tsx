@@ -1,7 +1,7 @@
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
-import PropertyCard from "@/src/components/PropertyCard";
-import { filterProperties, getProperties } from "@/src/lib/properties";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import PropertyCard from "@/components/PropertyCard";
+import { filterProperties, getProperties } from "@/lib/properties";
 import { Filter } from "lucide-react";
 import { Metadata } from "next";
 

@@ -1,10 +1,10 @@
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowRight, Mail, Phone } from "lucide-react";
-import { teamMembers } from "@/src/lib/team";
+import { teamMembers } from "@/lib/team";
 
 export const metadata: Metadata = {
   title: "Our Team, Good Deal",

@@ -1,5 +1,5 @@
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowRight } from "lucide-react";

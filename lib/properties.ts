@@ -12,8 +12,8 @@ Fetches and formats Good Deal property listings from the estate SDK.
 ::end
 */
 
-import { listEstateProperties } from "@/logica/estate/properties/list";
-import { viewEstateProperty } from "@/logica/estate/properties/view";
+import { listEstateProperties } from "#/logica/estate/property/list";
+import { viewEstateProperty } from "#/logica/estate/property/view";
 
 export interface PropertyPricing {
   type: string;

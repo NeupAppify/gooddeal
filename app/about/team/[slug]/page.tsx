@@ -1,10 +1,10 @@
-import Header from "@/src/components/Header";
-import Footer from "@/src/components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Mail, Phone } from "lucide-react";
-import { getTeamMemberBySlug, teamMembers } from "@/src/lib/team";
+import { getTeamMemberBySlug, teamMembers } from "@/lib/team";
 
 /*
 ::neup.documentation::gooddeal-team-member-page
