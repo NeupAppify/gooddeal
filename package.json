@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "preinstall": "test -f ./@neup/setup/nextjs/index.sh",
-    "postinstall": "chmod +x ./@neup/setup/nextjs/index.sh && ./@neup/setup/nextjs/index.sh --mode install",
-    "setup": "chmod +x ./@neup/setup/nextjs/index.sh && ./@neup/setup/nextjs/index.sh --mode install",
-    "prebuild": "chmod +x ./@neup/setup/nextjs/index.sh && ./@neup/setup/nextjs/index.sh --mode optimize",
-    "predev": "npm run setup",
+    "neup.cloner": "cd ./@neup && git clone https://github.com/neupgroup/nextjs.setup && mv nextjs.setup setup",
+    "neup.install": "npm run neup.cloner && cd ./@neup && chmod +x ./setup/index.sh && ./setup/index.sh --mode install",
+    "neup.optimize": "npm run neup.cloner && cd ./@neup && chmod +x ./setup/index.sh && ./setup/index.sh --mode optimize",
     
-
-    "dev": "next dev --port 4663",
+    "preinstall": "npm run neup.cloner",
+    "prebuild": "npm run neup.optimize",
+    "predev": "npm run neup.install",
+    
+    "dev": "next dev --experimental-https --hostname dev.gooddeal.com --port 4663",
     "build": "next build",
     "start": "next start --port 4663",
     "lint": "eslint"
