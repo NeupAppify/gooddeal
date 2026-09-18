@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Building2, Home, Tag, CheckCircle } from "lucide-react";
-import { cn } from "#/core/utils";
+import { cn } from "@/@neup/core/utils";
 
 interface PropertyCardProps {
   slug: string;

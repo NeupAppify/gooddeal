@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
+import SharedRootLayout from "@/@neup/components/layout/RootLayout";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable}`}>
       <body className="antialiased font-sans">
-        {children}
+        <SharedRootLayout>{children}</SharedRootLayout>
       </body>
     </html>
   );

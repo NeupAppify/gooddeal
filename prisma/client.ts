@@ -1,5 +1,4 @@
-// Temporary project-local Prisma client surface. Replace with generated output
-// when a Prisma schema is added to this application.
+// Project-local Prisma client surface until a generated schema client is added.
 export class PrismaClient {
   constructor(_options?: unknown) {}
 }

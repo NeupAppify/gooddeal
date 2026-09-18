@@ -12,8 +12,8 @@ Fetches and formats Good Deal property listings from the estate SDK.
 ::end
 */
 
-import { listEstateProperties } from "#/logica/estate/property/list";
-import { viewEstateProperty } from "#/logica/estate/property/view";
+import { listEstateProperties } from "@/@neup/logica/estate/property/list";
+import { viewEstateProperty } from "@/@neup/logica/estate/property/view";
 
 export interface PropertyPricing {
   type: string;
@@ -33,6 +33,15 @@ export interface PropertyRoadAccess {
   roadWidth: number;
   roadWidthUnit: string;
   roadType: string;
+}
+
+export interface PropertyListedBy {
+  id: string;
+  displayName: string;
+  displayImage: string;
+  type: "agent" | "agency" | "owner" | "developer" | string;
+  agencyId: string;
+  agencyName: string;
 }
 
 export interface Property {
@@ -60,6 +69,7 @@ export interface Property {
   amenities: string[];
   details: Record<string, unknown>;
   listingAgent: string;
+  listedBy: PropertyListedBy[];
   supportingAgents: {
     name: string;
     image: string;
@@ -240,6 +250,32 @@ function getSupportingAgents(value: unknown): Property["supportingAgents"] {
   });
 }
 
+function getListedBy(value: unknown): PropertyListedBy[] {
+  const record = asRecord(value);
+  const entries = Array.isArray(value)
+    ? value
+    : "id" in record || "displayName" in record
+      ? [record]
+      : Object.values(record);
+
+  return entries.flatMap((entry) => {
+    const listedBy = asRecord(entry);
+    const id = asString(listedBy.id);
+    const displayName = asString(listedBy.displayName);
+
+    if (!id && !displayName) return [];
+
+    return [{
+      id,
+      displayName,
+      displayImage: asString(listedBy.displayImage),
+      type: asString(listedBy.type),
+      agencyId: asString(listedBy.agencyId),
+      agencyName: asString(listedBy.agencyName),
+    }];
+  });
+}
+
 async function lookupAgentProfile(
   accountId: string,
   cache: Map<string, Promise<AgentProfile | null>>,
@@ -286,6 +322,7 @@ async function lookupAgentProfile(
 async function toProperty(
   property: SdkProperty,
   agentLookupCache: Map<string, Promise<AgentProfile | null>>,
+  includeListedBy = false,
 ): Promise<Property> {
   const agency = asRecord(property.agency);
   const listedBy = asRecord(property.listedBy);
@@ -322,6 +359,7 @@ async function toProperty(
     amenities: asLabelList(property.amenities),
     details: asRecord(property.details),
     listingAgent,
+    listedBy: includeListedBy ? getListedBy(property.listedBy) : [],
     supportingAgents: getSupportingAgents(property.supportingAgents),
     agency: {
       id: asString(agency.id, GOODDEAL_AGENCY_ID),
@@ -451,7 +489,7 @@ export async function getPropertyBySlug(slug: string): Promise<Property | null> 
     return property;
   }
 
-  const detailProperty = await toProperty(asRecord(response.body.property), new Map());
+  const detailProperty = await toProperty(asRecord(response.body.property), new Map(), true);
 
   return {
     ...property,

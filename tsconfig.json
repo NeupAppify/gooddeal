@@ -16,8 +16,8 @@
     "plugins": [{"name": "next"}],
     "paths": {
       "@/*": ["./*"],
-      "#/*": ["./.neup/*"],
-      "$/*": ["./base/*"]
+      "@neup/*": ["./@neup/*"],
+      "@base/*": ["./@base/*"]
     }
   },
   "include": [
@@ -26,8 +26,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    ".neup/**/*.ts",
-    ".neup/**/*.tsx",
+    "@neup/**/*.ts",
+    "@neup/**/*.tsx",
     "**/*.mts"
   ],
   "exclude": ["node_modules"]
