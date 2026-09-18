@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "neup.cloner": "cd ./@neup && git clone https://github.com/neupgroup/nextjs.setup && mv nextjs.setup setup",
+    "neup.cloner": "test -d ./@neup/setup || (mkdir -p ./@neup && cd ./@neup && git clone --depth 1 --single-branch --branch main https://github.com/neupgroup/nextjs.setup.git nextjs.setup && mv nextjs.setup setup)",
     "neup.install": "npm run neup.cloner && cd ./@neup && chmod +x ./setup/index.sh && ./setup/index.sh --mode install",
     "neup.optimize": "npm run neup.cloner && cd ./@neup && chmod +x ./setup/index.sh && ./setup/index.sh --mode optimize",
     
@@ -11,7 +11,7 @@
     "prebuild": "npm run neup.optimize",
     "predev": "npm run neup.install",
     
-    "dev": "next dev --experimental-https --hostname dev.gooddeal.com --port 4663",
+    "dev": "next dev --experimental-https --hostname localhost --port 4663",
     "build": "next build",
     "start": "next start --port 4663",
     "lint": "eslint"

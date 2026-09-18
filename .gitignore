@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# certificates
+/certificates
+
 # production
 /build
 
@@ -50,4 +53,6 @@ next-env.d.ts
 @neup/nextjs.logica
 @neup/setup
 @neup/nextjs.setup
-certificates
+@neup/domain
+@neup/devdomain.setup
+
