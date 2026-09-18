@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "setup": "chmod +x ./setup.sh && ./setup.sh",
-    "prebuild": "npm run setup",
+    "preinstall": "test -f ./@neup/setup/nextjs/index.sh",
+    "postinstall": "chmod +x ./@neup/setup/nextjs/index.sh && ./@neup/setup/nextjs/index.sh --mode install",
+    "setup": "chmod +x ./@neup/setup/nextjs/index.sh && ./@neup/setup/nextjs/index.sh --mode install",
+    "prebuild": "chmod +x ./@neup/setup/nextjs/index.sh && ./@neup/setup/nextjs/index.sh --mode optimize",
     "predev": "npm run setup",
+    
+
     "dev": "next dev --port 4663",
     "build": "next build",
     "start": "next start --port 4663",
