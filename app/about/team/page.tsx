@@ -38,7 +38,7 @@ export default function TeamPage() {
       <Header />
       
       <main className="flex-grow">
-        <section className="pt-44 pb-20 bg-platinum/30">
+        <section className="pt-44 pb-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
             <h1 className="text-5xl font-serif text-charcoal mb-6">Our Team</h1>
             <p className="text-lg text-warm-gray max-w-2xl mx-auto">
@@ -47,7 +47,7 @@ export default function TeamPage() {
           </div>
         </section>
 
-        <section className="py-24 bg-white">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {teamMembers.map((member) => (
@@ -79,7 +79,7 @@ export default function TeamPage() {
         </section>
 
         {/* Hiring CTA */}
-        <section className="py-24 bg-platinum/30 border-t border-platinum">
+        <section className="py-24 border-t border-platinum">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
             <h2 className="text-3xl font-serif text-charcoal mb-4">We might be hiring</h2>
             <p className="text-warm-gray max-w-xl mx-auto mb-8">

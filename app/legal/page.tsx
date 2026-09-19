@@ -9,7 +9,7 @@ export default function LegalPage() {
       <Header />
       
       <main className="flex-grow">
-        <section className="py-20 bg-platinum/30">
+        <section className="py-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
             <h1 className="text-5xl font-serif text-charcoal mb-6">Legal & Compliance</h1>
             <p className="text-lg text-warm-gray max-w-2xl mx-auto">
@@ -18,7 +18,7 @@ export default function LegalPage() {
           </div>
         </section>
 
-        <section className="py-24 bg-white">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[

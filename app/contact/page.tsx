@@ -13,7 +13,7 @@ export default function ContactPage() {
       <Header />
       
       <main className="flex-grow bg-white">
-        <section className="pt-44 pb-20 bg-platinum/30">
+        <section className="pt-44 pb-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
             <h1 className="text-5xl font-serif text-charcoal mb-6">Get in Touch</h1>
             <p className="text-lg text-warm-gray max-w-2xl mx-auto">

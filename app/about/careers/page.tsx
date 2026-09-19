@@ -13,7 +13,7 @@ export default function CareersPage() {
       <Header />
       
       <main className="flex-grow">
-        <section className="pt-44 pb-20 bg-platinum/30">
+        <section className="pt-44 pb-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
             <h1 className="text-5xl font-serif text-charcoal mb-6">Join Our Mission</h1>
             <p className="text-lg text-warm-gray max-w-2xl mx-auto">
@@ -22,7 +22,7 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <section className="py-24 bg-white">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-2xl font-serif mb-8">Open Positions</h2>

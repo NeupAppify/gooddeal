@@ -51,7 +51,7 @@ export default function HowItWorks() {
             <Header />
 
             <main className="flex-grow">
-                <section className="pt-44 pb-20 bg-platinum">
+                <section className="pt-44 pb-20">
                     <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
                         <div className="max-w-3xl">
                             <h1 className="text-5xl md:text-6xl mb-8">Structured Process. Clear Outcomes.</h1>
@@ -63,7 +63,7 @@ export default function HowItWorks() {
                     </div>
                 </section>
 
-                <section className="py-24 bg-white">
+                <section className="py-24">
                     <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                             {steps.map((step, i) => (
@@ -90,7 +90,7 @@ export default function HowItWorks() {
                     </div>
                 </section>
 
-                <section className="py-24 bg-platinum/30 border-t border-platinum">
+                <section className="py-24 border-t border-platinum">
                     <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
                         <div className="max-w-4xl mx-auto bg-white p-12 md:p-20 card-premium">
                             <h2 className="text-3xl mb-8">Transparency Statement</h2>

@@ -20,7 +20,7 @@ export default function SellPage() {
       <Header />
 
       <main className="flex-grow">
-        <section className="bg-platinum/30 px-6 pb-16 pt-40 md:px-12 md:pb-24 md:pt-48">
+        <section className="px-6 pb-16 pt-40 md:px-12 md:pb-24 md:pt-48">
           <div className="mx-auto max-w-[1440px]">
             <p className="mb-5 text-xs font-medium uppercase tracking-[0.22em] text-sage">
               Sell with Good Deal

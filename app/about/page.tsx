@@ -16,7 +16,7 @@ export default function AboutPage() {
       
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="pt-44 pb-20 bg-platinum/30">
+        <section className="pt-44 pb-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
             <h1 className="text-5xl md:text-6xl font-serif text-charcoal mb-6">
               Restoring Trust in Real Estate.
@@ -28,7 +28,7 @@ export default function AboutPage() {
         </section>
 
         {/* Story Section */}
-        <section className="py-24 bg-white">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <div className="relative aspect-square rounded-2xl overflow-hidden bg-platinum">
@@ -59,7 +59,7 @@ export default function AboutPage() {
         </section>
 
         {/* Values Grid */}
-        <section className="py-24 bg-platinum/30">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {[
@@ -92,7 +92,7 @@ export default function AboutPage() {
         </section>
 
         {/* Team Teaser */}
-        <section className="py-24 bg-white text-center">
+        <section className="py-24 text-center">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <h2 className="text-4xl font-serif mb-6">Meet the Experts</h2>
             <p className="text-warm-gray max-w-xl mx-auto mb-12">

@@ -23,6 +23,10 @@
 }
 
 @layer base {
+  section h2 {
+    margin-bottom: 0.5rem !important;
+  }
+
   body {
     @apply bg-white text-charcoal antialiased font-sans;
     font-family: var(--font-outfit);
@@ -79,6 +83,18 @@
 }
 
 @layer components {
+  main > section:nth-of-type(odd) {
+    background-color: #fff;
+  }
+
+  main > section:nth-of-type(even) {
+    background-color: color-mix(in srgb, var(--primary) 6%, #fff);
+  }
+
+  .site-footer {
+    background-color: color-mix(in srgb, var(--primary) 80%, #000);
+  }
+
   .btn-primary {
     @apply inline-flex items-center justify-center bg-russian-purple text-white px-8 py-3 rounded-[6px] transition-all duration-300 hover:bg-[#251138] hover:shadow-lg active:scale-[0.98];
   }

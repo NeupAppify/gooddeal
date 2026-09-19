@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Building2, Home, Tag, CheckCircle } from "lucide-react";
+import { Building2, Home, Tag, CheckCircle } from "lucide-react";
 import { cn } from "@/@neup/core/utils";
 
 interface PropertyCardProps {
@@ -13,6 +13,7 @@ interface PropertyCardProps {
   type: string;
   image: string;
   verified?: boolean;
+  showAgent?: boolean;
   agent?: {
     name: string;
     image: string;
@@ -30,6 +31,7 @@ const PropertyCard = ({
   type,
   image,
   verified = false,
+  showAgent = true,
   agent = {
     name: "Mukti Nath Nepal",
     image: "/hero.png" // default placeholder
@@ -61,22 +63,21 @@ const PropertyCard = ({
           <h3 className="font-serif text-lg leading-tight text-charcoal group-hover:text-russian-purple transition-colors mb-2">
             {title}
           </h3>
-          <div className="flex items-center text-warm-gray text-sm mb-4">
-            <MapPin className="w-4 h-4 mr-1 text-russian-purple/70" />
-            {location}
-          </div>
+          <p className="text-warm-gray text-sm mb-4">At {location}</p>
           
-          <div className="flex items-center gap-2 pt-2">
-            <div className="w-6 h-6 rounded-full overflow-hidden bg-platinum relative">
-               <Image 
-                src={agent.image} 
-                alt={agent.name} 
-                fill 
-                className="object-cover"
-              />
+          {showAgent && (
+            <div className="flex items-center gap-2 pt-2">
+              <div className="w-6 h-6 rounded-full overflow-hidden bg-platinum relative">
+                 <Image 
+                  src={agent.image} 
+                  alt={agent.name} 
+                  fill 
+                  className="object-cover"
+                />
+              </div>
+              <span className="text-xs text-warm-gray">Listed by <span className="text-charcoal font-medium">{agent.name}</span></span>
             </div>
-            <span className="text-xs text-warm-gray">Listed by <span className="text-charcoal font-medium">{agent.name}</span></span>
-          </div>
+          )}
         </div>
 
         <div className="flex items-center justify-between pt-4 border-t border-platinum mt-auto">

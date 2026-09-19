@@ -5,7 +5,7 @@ import { Facebook, Instagram, Youtube, Twitter, Linkedin, Mail, Phone } from "lu
 
 const Footer = () => {
     return (
-        <footer className="bg-charcoal text-white pt-20 pb-10">
+        <footer className="site-footer text-white pt-20 pb-10">
             <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     <div className="col-span-1 md:col-span-1">

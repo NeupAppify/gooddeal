@@ -48,7 +48,7 @@ export default function Services() {
             <Header />
 
             <main className="flex-grow">
-                <section className="pt-44 pb-20 bg-white">
+                <section className="pt-44 pb-20">
                     <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
                         <h1 className="text-5xl md:text-6xl mb-8">Professional Advisory Services.</h1>
                         <p className="text-lg text-warm-gray leading-relaxed max-w-2xl mx-auto">
@@ -58,7 +58,7 @@ export default function Services() {
                     </div>
                 </section>
 
-                <section className="py-12 bg-platinum/30">
+                <section className="py-12">
                     <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {services.map((service, i) => (
@@ -82,7 +82,7 @@ export default function Services() {
                     </div>
                 </section>
 
-                <section className="py-24 bg-white border-t border-platinum">
+                <section className="py-24 border-t border-platinum">
                     <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
                             <div>

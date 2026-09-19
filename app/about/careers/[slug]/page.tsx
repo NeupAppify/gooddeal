@@ -31,7 +31,7 @@ export default function JobDetailPage() {
       <Header />
       
       <main className="flex-grow bg-white">
-        <section className="pt-44 pb-20 bg-platinum/30">
+        <section className="pt-44 pb-20">
           <div className="container mx-auto max-w-[800px] px-6">
             <Link href="/about/careers" className="inline-flex items-center gap-2 text-sm text-warm-gray hover:text-russian-purple mb-8 transition-colors">
               <ArrowLeft className="w-4 h-4" /> Back to Careers

@@ -20,7 +20,7 @@ export default async function Home() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative min-h-[85vh] flex items-start bg-white overflow-hidden pt-28 md:items-center md:pt-0">
+        <section className="relative min-h-[85vh] flex items-start overflow-hidden pt-28 md:items-center md:pt-0">
            {/* Background Image with Opacity */}
            <div className="absolute inset-x-0 bottom-0 h-[65%] z-0 pointer-events-none">
              <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-white/80 to-white z-10" />
@@ -38,12 +38,15 @@ export default async function Home() {
               <span className="inline-block px-3 py-1 bg-platinum rounded-full text-xs font-sans font-semibold tracking-wider text-russian-purple mb-6 border border-black/5 uppercase">
                 Premium Real Estate Advisory
               </span>
-              <h1 className="text-5xl md:text-7xl leading-[1.1] mb-8 text-charcoal font-serif">
+              <h1 className="text-3xl md:text-5xl leading-[1.1] mb-2 text-charcoal font-serif font-semibold">
                 Real Estate, Handled With <br/> Clarity and Care.
               </h1>
+              <p className="w-full mb-8 text-base leading-relaxed text-warm-gray md:text-lg">
+                Trusted guidance for buying, selling, and verifying property with confidence.
+              </p>
               
               {/* Search Box */}
-              <form action="/properties" method="GET" className="bg-white p-2 rounded-full shadow-lg border border-platinum max-w-2xl mb-12 flex items-center">
+              <form action="/properties" method="GET" className="bg-white p-2 rounded-xl shadow-lg border border-platinum max-w-2xl mb-6 flex items-center">
                  <div className="flex-grow px-6 py-2">
                     <input 
                       type="text" 
@@ -59,19 +62,19 @@ export default async function Home() {
               </form>
 
               {/* Action Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mb-12">
-                <Link href="/services/selling" className="group bg-white/60 backdrop-blur-md p-6 rounded-2xl border border-platinum hover:border-russian-purple/30 transition-all text-left flex items-center gap-4 shadow-sm hover:shadow-md">
-                  <div className="w-10 h-10 bg-platinum rounded-full flex items-center justify-center text-russian-purple shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
-                    <HomeIcon className="w-5 h-5" />
+              <div className="flex flex-wrap items-center gap-4 max-w-2xl mb-6">
+                <Link href="/properties" className="group w-fit bg-russian-purple px-5 py-3 rounded-lg border border-russian-purple hover:bg-[#251138] transition-all text-left flex items-center gap-3 shadow-md hover:shadow-lg">
+                  <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-white shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
+                    <Building className="w-4 h-4" />
                   </div>
-                  <h3 className="text-lg font-medium text-charcoal group-hover:text-russian-purple transition-colors">Sell Your Property</h3>
+                  <h3 className="text-base font-medium text-white">Buy a Property</h3>
                 </Link>
 
-                <Link href="/properties" className="group bg-russian-purple p-6 rounded-2xl border border-russian-purple hover:bg-[#251138] transition-all text-left flex items-center gap-4 shadow-md hover:shadow-lg">
-                  <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
-                    <Building className="w-5 h-5" />
+                <Link href="/sell" className="group w-fit bg-white/60 backdrop-blur-md px-5 py-3 rounded-lg border border-platinum hover:border-russian-purple/30 transition-all text-left flex items-center gap-3 shadow-sm hover:shadow-md">
+                  <div className="w-8 h-8 bg-platinum rounded-full flex items-center justify-center text-russian-purple shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
+                    <HomeIcon className="w-4 h-4" />
                   </div>
-                  <h3 className="text-lg font-medium text-white">Buy a Property</h3>
+                  <h3 className="text-base font-medium text-charcoal group-hover:text-russian-purple transition-colors">Sell Your Property</h3>
                 </Link>
               </div>
 
@@ -83,7 +86,7 @@ export default async function Home() {
         </section>
 
         {/* Trust Indicators */}
-        <section className="bg-white py-16 border-y border-platinum">
+        <section className="py-16 border-y border-platinum">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
@@ -92,7 +95,7 @@ export default async function Home() {
                 { label: "Properties Verified", value: "1200+" },
                 { label: "Locations Covered", value: "12 Districts" },
               ].map((stat, i) => (
-                <div key={i} className="text-center md:text-left">
+                <div key={i} className="text-left">
                   <div className="font-serif text-3xl text-russian-purple mb-1">{stat.value}</div>
                   <div className="text-warm-gray text-sm">{stat.label}</div>
                 </div>
@@ -102,28 +105,29 @@ export default async function Home() {
         </section>
 
         {/* Featured Properties */}
-        <section className="py-24 bg-platinum/30">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-              <div className="max-w-xl">
+              <div className="w-full">
                 <span className="text-sage font-medium text-sm tracking-wider uppercase mb-2 block">Curated Selection</span>
-                <h2 className="text-4xl md:text-5xl mb-4">Featured Properties</h2>
+                <h2 className="text-4xl md:text-5xl mb-4 font-semibold">
+                  <Link href="/properties" className="text-charcoal hover:text-russian-purple hover:underline transition-colors">
+                    Featured Properties &gt;
+                  </Link>
+                </h2>
                 <p className="text-warm-gray text-lg">
-                  Handpicked properties that meet our strict verification standards.
+                  Handpicked properties that meet our strict verification standards. <Link href="/properties" className="text-russian-purple hover:underline">View all properties.</Link>
                 </p>
               </div>
-              <Link href="/properties" className="text-russian-purple font-medium hover:underline flex items-center gap-2">
-                View all listings <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {featuredProperties.map((prop) => (
-                <PropertyCard key={prop.id} {...prop} />
+                <PropertyCard key={prop.id} {...prop} showAgent={false} />
               ))}
             </div>
             {featuredProperties.length === 0 && (
-              <div className="border border-platinum bg-white px-6 py-12 text-center text-warm-gray">
+              <div className="border border-platinum bg-white px-6 py-12 text-left text-warm-gray">
                 No featured properties are available right now.
               </div>
             )}
@@ -131,20 +135,21 @@ export default async function Home() {
         </section>
 
         {/* Services Overview */}
-        <section className="py-24 bg-white">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-              <div className="max-w-xl">
+              <div className="w-full">
                 <span className="text-russian-purple font-medium text-sm tracking-wider uppercase mb-2 block">Our Expertise</span>
-                <h2 className="text-4xl md:text-5xl mb-6">Expertise Built on Trust.</h2>
+                <h2 className="text-4xl md:text-5xl mb-6 font-semibold">
+                  <Link href="/services" className="text-charcoal hover:text-russian-purple hover:underline transition-colors">
+                    Expertise Built on Trust &gt;
+                  </Link>
+                </h2>
                 <p className="text-warm-gray text-lg">Our services are designed to protect your interests and ensure a seamless property transaction.</p>
               </div>
-              <Link href="/services" className="text-russian-purple font-medium hover:underline flex items-center gap-2">
-                View all services <ArrowRight className="w-4 h-4" />
-              </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
                   title: "Buying Advisory",
@@ -164,6 +169,12 @@ export default async function Home() {
                   link: "/services/legal",
                   icon: <Scale className="w-8 h-8" />,
                 },
+                {
+                  title: "Selling Representation",
+                  desc: "Professional support to position, market, and negotiate your property with confidence.",
+                  link: "/services/selling",
+                  icon: <HomeIcon className="w-8 h-8" />,
+                },
               ].map((service, i) => (
                 <div key={i} className="card-premium p-10 flex flex-col items-start gap-6 group hover:-translate-y-1">
                   <div className="w-14 h-14 rounded-full bg-platinum flex items-center justify-center text-russian-purple group-hover:bg-russian-purple group-hover:text-white transition-colors duration-300">
@@ -181,16 +192,20 @@ export default async function Home() {
         </section>
 
         {/* Insights Teaser */}
-        <section className="py-24 bg-platinum/50">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="text-4xl md:text-5xl mb-6">Market Insights</h2>
+            <div className="text-left w-full mb-16">
+              <h2 className="text-4xl md:text-5xl mb-6 font-semibold">
+                <Link href="/insights" className="text-charcoal hover:text-russian-purple hover:underline transition-colors">
+                  Market Insights &gt;
+                </Link>
+              </h2>
               <p className="text-warm-gray text-lg">
                 Stay informed with the latest trends, legal updates, and investment advice from our experts.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
                   title: "5 Legal Pitfalls to Avoid When Buying Land",
@@ -206,6 +221,11 @@ export default async function Home() {
                   title: "Is it the Right Time to Invest in Kathmandu?",
                   category: "Investment",
                   date: "Sep 15, 2024",
+                },
+                {
+                  title: "How to Verify a Property Before You Buy",
+                  category: "Property Guide",
+                  date: "Sep 05, 2024",
                 },
               ].map((post, i) => (
                 <Link key={i} href="/insights/1" className="group block">
@@ -223,18 +243,13 @@ export default async function Home() {
                 </Link>
               ))}
             </div>
-             <div className="text-center mt-12">
-                <Link href="/insights" className="btn-secondary">
-                    Read All Insights
-                </Link>
-            </div>
           </div>
         </section>
 
         {/* Call to Action */}
-        <section className="py-24 bg-white">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
-            <div className="bg-russian-purple rounded-2xl p-12 md:p-20 text-center text-white relative overflow-hidden">
+            <div className="bg-russian-purple rounded-2xl p-12 md:p-20 text-left text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32" />
               <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mb-24" />
 

@@ -45,7 +45,7 @@ export default function BlogPage() {
       <Header />
       
       <main className="flex-grow">
-        <section className="pt-44 pb-20 bg-platinum/30">
+        <section className="pt-44 pb-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12 text-center">
             <h1 className="text-5xl font-serif text-charcoal mb-6">Blogs and Market Insights</h1>
             <p className="text-lg text-warm-gray max-w-2xl mx-auto">
@@ -54,7 +54,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        <section className="py-24 bg-white">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {articles.map((article, i) => (

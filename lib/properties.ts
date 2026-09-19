@@ -412,7 +412,7 @@ export async function getProperties(): Promise<Property[]> {
   return Promise.all(properties.map((property) => toProperty(asRecord(property), agentLookupCache)));
 }
 
-export async function getFeaturedProperties(limit = 3): Promise<Property[]> {
+export async function getFeaturedProperties(limit = 4): Promise<Property[]> {
   const properties = await getProperties();
 
   return properties.slice(0, limit);

@@ -26,7 +26,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
       <Header />
       
       <main className="flex-grow">
-        <section className="pt-36 pb-12 bg-platinum/30 border-b border-platinum">
+        <section className="pt-36 pb-12 border-b border-platinum">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
               <div>
@@ -50,7 +50,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section className="py-16">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProperties.map((prop) => (

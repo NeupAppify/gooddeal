@@ -9,7 +9,7 @@ export default function FounderPage() {
       <Header />
       
       <main className="flex-grow">
-        <section className="pt-44 pb-24 bg-white">
+        <section className="pt-44 pb-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
               <div className="relative aspect-[3/4] bg-platinum rounded-2xl overflow-hidden lg:sticky lg:top-32">
