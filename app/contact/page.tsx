@@ -28,9 +28,10 @@ export default function ContactPage() {
               
               {/* Contact Info */}
               <div>
-                <h2 className="text-3xl font-serif text-charcoal mb-8">Contact Information</h2>
-                <div className="space-y-8 mb-12">
-                  <div className="flex items-start gap-4">
+                <h2 className="text-3xl font-serif text-charcoal mb-2">Contact Information</h2>
+                <p className="text-warm-gray mb-8">Visit, call, or write to us and our team will be happy to help.</p>
+                <div className="space-y-2 mb-12">
+                  <div className="flex items-start gap-4 rounded-lg border border-russian-purple/15 p-5">
                     <div className="w-12 h-12 rounded-full bg-platinum flex items-center justify-center text-russian-purple shrink-0">
                       <MapPin className="w-6 h-6" />
                     </div>
@@ -41,7 +42,7 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 rounded-lg border border-russian-purple/15 p-5">
                     <div className="w-12 h-12 rounded-full bg-platinum flex items-center justify-center text-russian-purple shrink-0">
                       <Phone className="w-6 h-6" />
                     </div>
@@ -53,7 +54,7 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 rounded-lg border border-russian-purple/15 p-5">
                     <div className="w-12 h-12 rounded-full bg-platinum flex items-center justify-center text-russian-purple shrink-0">
                       <Mail className="w-6 h-6" />
                     </div>
@@ -65,7 +66,7 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 rounded-lg border border-russian-purple/15 p-5">
                     <div className="w-12 h-12 rounded-full bg-platinum flex items-center justify-center text-russian-purple shrink-0">
                       <Clock className="w-6 h-6" />
                     </div>
@@ -80,7 +81,8 @@ export default function ContactPage() {
 
               {/* Contact Form */}
               <div className="bg-white rounded-2xl border border-platinum p-8 md:p-10 shadow-sm">
-                <h2 className="text-2xl font-serif text-charcoal mb-6">Send us a Message</h2>
+                <h2 className="text-2xl font-serif text-charcoal mb-2">Send us a Message</h2>
+                <p className="text-warm-gray mb-6">Tell us how we can help, and we&apos;ll get back to you as soon as possible.</p>
                 <form className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>

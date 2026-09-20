@@ -95,6 +95,39 @@
     background-color: color-mix(in srgb, var(--primary) 80%, #000);
   }
 
+  .property-detail-section {
+    position: relative;
+    isolation: isolate;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .property-detail-section::before {
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    z-index: 0;
+    width: 100vw;
+    min-height: 100%;
+    transform: translateX(-50%);
+    content: "";
+    pointer-events: none;
+  }
+
+  .property-detail-section--odd::before {
+    background-color: #fff;
+  }
+
+  .property-detail-section--even::before {
+    background-color: color-mix(in srgb, var(--primary) 6%, #fff);
+  }
+
+  .property-detail-section__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
   .btn-primary {
     @apply inline-flex items-center justify-center bg-russian-purple text-white px-8 py-3 rounded-[6px] transition-all duration-300 hover:bg-[#251138] hover:shadow-lg active:scale-[0.98];
   }

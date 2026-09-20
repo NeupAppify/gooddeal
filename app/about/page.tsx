@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ShieldCheck, Users, Target } from "lucide-react";
+import { teamMembers } from "@/lib/team";
 
 export const metadata: Metadata = {
   title: "About Us, Good Deal",
@@ -92,19 +93,43 @@ export default function AboutPage() {
         </section>
 
         {/* Team Teaser */}
-        <section className="py-24 text-center">
+        <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
-            <h2 className="text-4xl font-serif mb-6">Meet the Experts</h2>
-            <p className="text-warm-gray max-w-xl mx-auto mb-12">
-              Our team consists of certified real estate agents, property lawyers, and market analysts.
+            <h2 className="text-4xl font-serif font-semibold mb-2">Meet the Experts</h2>
+            <p className="text-warm-gray mb-12">
+              Our team consists of certified real estate agents, property lawyers, and market analysts. <Link href="/about/team" className="text-russian-purple hover:underline">View all team.</Link>
             </p>
-            <div className="flex justify-center gap-4">
-              <Link href="/about/team" className="btn-primary">
-                View Our Team
-              </Link>
-              <Link href="/about/founder" className="btn-secondary">
-                Founder&apos;s Message
-              </Link>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {teamMembers.slice(0, 4).map((member) => (
+                <Link key={member.slug} href={`/about/team/${member.slug}`} className="group">
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-platinum mb-4">
+                    <Image src={member.image} alt={member.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-charcoal group-hover:text-russian-purple transition-colors">{member.name}</h3>
+                  <p className="mt-1 text-sm uppercase tracking-wider text-russian-purple">{member.role}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Founder Message */}
+        <section className="py-24">
+          <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-platinum">
+                <Image src="/team/founder.jpg" alt="Mukti Nath Nepal, Founder" fill className="object-cover" />
+              </div>
+              <div>
+                <span className="text-russian-purple font-medium text-sm tracking-wider uppercase mb-2 block">Founder Message</span>
+                <h2 className="text-4xl font-serif font-semibold mb-2">A Promise Built on Trust</h2>
+                <p className="text-warm-gray text-lg leading-relaxed">
+                  When I founded Good Deal, I wanted to create a real estate platform built on trust, integrity, and exceptional service. Every client deserves clear information, verified properties, and professional guidance at every step.
+                </p>
+                <Link href="/about/founder" className="btn-secondary mt-8">
+                  View Full Message
+                </Link>
+              </div>
             </div>
           </div>
         </section>

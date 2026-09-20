@@ -196,9 +196,9 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
 
         <div className="border-t border-platinum" />
 
-        <section className="pt-10 pb-12 md:pt-14 md:pb-20">
+        <section className="relative pt-10 pb-12 md:pt-14 md:pb-20">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+            <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]">
               
               {/* Main Content */}
               <div className="lg:col-span-2">
@@ -242,49 +242,55 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                   </div>
                 </div>
 
-                <div className="mb-12">
-                  <h3 className="text-2xl font-serif mb-6">Description</h3>
-                  <p className="text-warm-gray leading-relaxed text-lg">
-                    {description}
-                  </p>
-                </div>
-
-                <div className="mb-12">
-                  <h3 className="text-2xl font-serif mb-5">Space & Access</h3>
-                  <SpaceAccessCards cards={spaceAccessCards} />
-                </div>
-
-                <div className="mb-12">
-                  <div className="mb-6 flex items-center justify-between gap-4">
-                    <h3 className="text-2xl font-serif">Location</h3>
-                    {property.locationDetails.geo && (
-                      <span className="text-sm text-warm-gray">{property.locationDetails.geo}</span>
-                    )}
+                <section className="property-detail-section property-detail-section--odd mb-12">
+                  <div className="property-detail-section__content">
+                    <h3 className="text-2xl font-serif mb-6">Description</h3>
+                    <p className="text-warm-gray leading-relaxed text-lg">
+                      {description}
+                    </p>
                   </div>
-                  <div className="rounded-lg border border-platinum bg-platinum/20 p-6">
-                    <div className="flex items-start gap-3">
-                      <MapPin className="mt-1 h-5 w-5 shrink-0 text-russian-purple" />
-                      <div>
-                        <div className="font-semibold text-charcoal">{property.location}</div>
-                        {locationParts.length > 0 && (
-                          <div className="mt-5 flex flex-wrap gap-2">
-                            {locationParts.map((part) => (
-                              <span key={part.label} className="rounded-md border border-platinum bg-white px-3 py-2 text-sm text-charcoal">
-                                <span className="text-warm-gray">{part.label}: </span>{part.value}
-                              </span>
-                            ))}
-                          </div>
-                        )}
+                </section>
+
+                <section className="property-detail-section property-detail-section--even mb-12">
+                  <div className="property-detail-section__content">
+                    <h3 className="text-2xl font-serif mb-5">Space & Access</h3>
+                    <SpaceAccessCards cards={spaceAccessCards} />
+                  </div>
+                </section>
+
+                <section className="property-detail-section property-detail-section--odd mb-12">
+                  <div className="property-detail-section__content">
+                    <div className="mb-6 flex items-center justify-between gap-4">
+                      <h3 className="text-2xl font-serif">Location</h3>
+                      {property.locationDetails.geo && (
+                        <span className="text-sm text-warm-gray">{property.locationDetails.geo}</span>
+                      )}
+                    </div>
+                    <div className="rounded-lg border border-platinum bg-white p-6">
+                      <div className="flex items-start gap-3">
+                        <MapPin className="mt-1 h-5 w-5 shrink-0 text-russian-purple" />
+                        <div>
+                          <div className="font-semibold text-charcoal">{property.location}</div>
+                          {locationParts.length > 0 && (
+                            <div className="mt-5 flex flex-wrap gap-2">
+                              {locationParts.map((part) => (
+                                <span key={part.label} className="rounded-md border border-platinum bg-white px-3 py-2 text-sm text-charcoal">
+                                  <span className="text-warm-gray">{part.label}: </span>{part.value}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </section>
 
               </div>
 
               {/* Sidebar */}
-              <div className="lg:col-span-1">
-                <div className="bg-white border border-platinum rounded-xl p-8 sticky top-32 shadow-lg">
+              <div className="relative lg:col-span-1">
+                <div className="sticky top-28 rounded-2xl border border-white/80 bg-white/95 p-6 shadow-[0_24px_70px_rgba(50,23,77,0.16)] backdrop-blur-xl md:p-8">
                   <h3 className="text-xl font-serif mb-6">Interested in this property?</h3>
                   <div className="mb-6 flex items-center gap-4 rounded-lg bg-platinum/30 p-4">
                     <div className="relative h-14 w-14 overflow-hidden rounded-full bg-platinum">

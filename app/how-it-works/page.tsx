@@ -68,7 +68,7 @@ export default function HowItWorks() {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                             {steps.map((step, i) => (
                                 <div key={i} className="flex flex-col gap-6 p-8 border-l border-platinum hover:border-russian-purple transition-colors duration-500">
-                                    <div className="text-5xl font-serif text-platinum group-hover:text-russian-purple transition-colors">
+                                    <div className="text-5xl font-serif font-semibold text-russian-purple/40 group-hover:text-russian-purple transition-colors">
                                         0{i + 1}
                                     </div>
                                     <h3 className="text-2xl">{step.title}</h3>
