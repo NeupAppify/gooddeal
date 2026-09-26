@@ -43,6 +43,23 @@
     color: var(--secondary);
   }
 
+  /* Keep page titles and section headings compact across the site. */
+  h1 {
+    font-size: clamp(1.8rem, 3.6vw, 3.1rem) !important;
+  }
+
+  h2 {
+    font-size: clamp(1.6rem, 2.7vw, 2.45rem) !important;
+  }
+
+  h3 {
+    font-size: clamp(1.15rem, 1.8vw, 1.35rem) !important;
+  }
+
+  p[class~="text-lg"] {
+    font-size: 0.95rem !important;
+  }
+
   p,
   span,
   div,
