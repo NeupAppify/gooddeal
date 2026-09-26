@@ -45,14 +45,4 @@ next-env.d.ts
 
 
 # Neup standard files.
-@neup/components
-@neup/nextjs.components
-@neup/core
-@neup/nextjs.core
-@neup/logica
-@neup/nextjs.logica
-@neup/setup
-@neup/nextjs.setup
-@neup/domain
-@neup/devdomain.setup
-
+@neup/

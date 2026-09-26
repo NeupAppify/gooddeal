@@ -1,11 +1,12 @@
 "use client";
 
 import { FormEvent } from "react";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-export default function SellPage() {
+function SellContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const submitted = searchParams.get("status") === "submitted";
@@ -87,5 +88,13 @@ export default function SellPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function SellPage() {
+  return (
+    <Suspense fallback={null}>
+      <SellContent />
+    </Suspense>
   );
 }
