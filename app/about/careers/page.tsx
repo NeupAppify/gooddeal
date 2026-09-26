@@ -2,12 +2,23 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import { Metadata } from "next";
+import { getEnvVariable } from "@neup/core/helpers/env";
+import { careers } from "@neup/logica/people/careers";
 
 export const metadata: Metadata = {
   title: "Careers, Good Deal",
 };
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const projectId = getEnvVariable("NEUP_SITES_PROJECT_ID", true);
+  if (!projectId) throw new Error("NEUP_SITES_PROJECT_ID is required to load careers.");
+  const response = await careers(projectId);
+  console.info("[people] careers response:", response);
+  const openPositions = response.ok && response.body.success && Array.isArray(response.body.data)
+    ? response.body.data
+    : [];
+  const careersError = response.ok ? response.body.error : `Careers request failed (${response.status}).`;
+
   return (
     <div className="min-h-screen flex flex-col ">
       <Header />
@@ -28,43 +39,34 @@ export default function CareersPage() {
               <h2 className="text-2xl font-serif mb-8">Open Positions</h2>
               
               <div className="space-y-6">
-                {[
-                  {
-                    title: "Real Estate Advisor",
-                    type: "Full-time",
-                    location: "Kathmandu",
-                    desc: "Guide clients through buying and selling processes with ethical sales practices."
-                  },
-                  {
-                    title: "Legal Associate",
-                    type: "Full-time",
-                    location: "Kathmandu",
-                    desc: "Assist in property verification, contract drafting, and due diligence."
-                  },
-                  {
-                    title: "Digital Marketing Specialist",
-                    type: "Part-time",
-                    location: "Remote / Hybrid",
-                    desc: "Manage our digital presence and educational content distribution."
-                  }
-                ].map((job, i) => (
-                  <div key={i} className="border border-platinum p-8 rounded-lg hover:border-russian-purple transition-colors bg-white group cursor-pointer">
+                {careersError && (
+                  <p className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                    {careersError}
+                  </p>
+                )}
+                {openPositions.map((job) => (
+                  <div key={job.slug} className="border border-platinum p-8 rounded-lg hover:border-russian-purple transition-colors bg-white group cursor-pointer">
                     <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
                       <div>
                         <h3 className="text-xl font-medium text-charcoal group-hover:text-russian-purple transition-colors">{job.title}</h3>
                         <div className="flex gap-4 text-sm text-warm-gray mt-2">
-                          <span>{job.type}</span>
+                          <span>{job.type || "Full-time"}</span>
                           <span>•</span>
-                          <span>{job.location}</span>
+                          <span>{job.location || "Kathmandu"}</span>
                         </div>
                       </div>
                       <Link href="/contact" className="btn-secondary text-sm">
                         Apply Now
                       </Link>
                     </div>
-                    <p className="mt-4 text-warm-gray text-sm">{job.desc}</p>
+                    {job.description && <p className="mt-4 text-warm-gray text-sm">{job.description}</p>}
+                    {job.salary && <p className="mt-2 text-sm text-warm-gray">Salary: {job.salary}</p>}
+                    {job.openings != null && <p className="mt-2 text-sm text-warm-gray">Openings: {job.openings}</p>}
                   </div>
                 ))}
+                {response.ok && openPositions.length === 0 && !careersError && (
+                  <p className="text-warm-gray">There are no open positions right now.</p>
+                )}
               </div>
 
               <div className="mt-16 p-8 bg-platinum/30 rounded-lg text-center">

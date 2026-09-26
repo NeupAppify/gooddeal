@@ -3,8 +3,9 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowRight, Mail, Phone } from "lucide-react";
-import { teamMembers } from "@/lib/team";
+import { ArrowRight } from "lucide-react";
+import { getEnvVariable } from "@neup/core/helpers/env";
+import { members } from "@neup/logica/people/members";
 
 export const metadata: Metadata = {
   title: "Our Team, Good Deal",
@@ -32,7 +33,18 @@ The team page layout.
 ::end
 */
 
-export default function TeamPage() {
+export default async function TeamPage() {
+  const projectId = getEnvVariable("NEUP_SITES_PROJECT_ID", true);
+  if (!projectId) throw new Error("NEUP_SITES_PROJECT_ID is required to load team members.");
+  const response = await members(projectId);
+  console.info("[people] members response:", response);
+  const teamMembers = response.ok && response.body.success && Array.isArray(response.body.data)
+    ? response.body.data
+    : [];
+  const membersError = response.ok
+    ? response.body.error
+    : `Team members request failed (${response.status}).`;
+
   return (
     <div className="min-h-screen flex flex-col ">
       <Header />
@@ -50,11 +62,16 @@ export default function TeamPage() {
         <section className="py-24">
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {membersError && (
+                <p className="col-span-full rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                  {membersError}
+                </p>
+              )}
               {teamMembers.map((member) => (
                 <Link key={member.slug} href={`/about/team/${member.slug}`} className="group block">
                   <div className="aspect-[3/4] relative overflow-hidden bg-platinum rounded-lg mb-6">
-                    <Image 
-                      src={member.image} 
+                    <Image
+                      src={member.displayImage || "/team/founder.jpg"}
                       alt={member.name} 
                       fill 
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -62,18 +79,11 @@ export default function TeamPage() {
                   </div>
                   <h3 className="text-xl font-serif text-charcoal mb-1">{member.name}</h3>
                   <p className="text-russian-purple text-sm font-medium uppercase tracking-wider mb-4">{member.role}</p>
-                  <div className="space-y-2 text-sm text-warm-gray">
-                    <p className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-russian-purple" />
-                      {member.phone}
-                    </p>
-                    <p className="flex items-center gap-2 break-all">
-                      <Mail className="w-4 h-4 text-russian-purple" />
-                      {member.email}
-                    </p>
-                  </div>
                 </Link>
               ))}
+              {response.ok && teamMembers.length === 0 && !membersError && (
+                <p className="col-span-full text-warm-gray">No team members are available right now.</p>
+              )}
             </div>
           </div>
         </section>

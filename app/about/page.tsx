@@ -4,13 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ShieldCheck, Users, Target } from "lucide-react";
-import { teamMembers } from "@/lib/team";
+import { getEnvVariable } from "@neup/core/helpers/env";
+import { members } from "@neup/logica/people/members";
 
 export const metadata: Metadata = {
   title: "About Us, Good Deal",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const projectId = getEnvVariable("NEUP_SITES_PROJECT_ID", true);
+  if (!projectId) throw new Error("NEUP_SITES_PROJECT_ID is required to load team members.");
+  const response = await members(projectId);
+  console.info("[people] members response:", response);
+  const teamMembers = response.ok && response.body.success && Array.isArray(response.body.data)
+    ? response.body.data
+    : [];
+
   return (
     <div className="min-h-screen flex flex-col ">
       <Header />
@@ -103,7 +112,7 @@ export default function AboutPage() {
               {teamMembers.slice(0, 4).map((member) => (
                 <Link key={member.slug} href={`/about/team/${member.slug}`} className="group">
                   <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-platinum mb-4">
-                    <Image src={member.image} alt={member.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <Image src={member.displayImage || "/team/founder.jpg"} alt={member.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <h3 className="text-xl font-semibold text-charcoal group-hover:text-russian-purple transition-colors">{member.name}</h3>
                   <p className="mt-1 text-sm uppercase tracking-wider text-russian-purple">{member.role}</p>

@@ -1,10 +1,11 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Mail, Phone } from "lucide-react";
-import { getTeamMemberBySlug, teamMembers } from "@/lib/team";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
+import { getEnvVariable } from "@neup/core/helpers/env";
+import { members } from "@neup/logica/people/members";
 
 /*
 ::neup.documentation::gooddeal-team-member-page
@@ -30,12 +31,6 @@ The team member profile page.
 
 ::public end
 
-::private
-
-The member lookup is shared with the team listing page through `src/lib/team.ts`.
-
-::private end
-
 ::end
 */
 
@@ -45,19 +40,29 @@ type TeamMemberPageProps = {
   }>;
 };
 
-function formatPhoneHref(phone: string) {
-  return `tel:${phone.replace(/[^\d+]/g, "")}`;
+function getProjectId() {
+  const projectId = getEnvVariable("NEUP_SITES_PROJECT_ID", true);
+  if (!projectId) throw new Error("NEUP_SITES_PROJECT_ID is required to load team members.");
+  return projectId;
 }
 
-export function generateStaticParams() {
-  return teamMembers.map((member) => ({
-    slug: member.slug,
+export async function generateStaticParams() {
+  const response = await members(getProjectId());
+  const teamMembers = response.ok && response.body.success && Array.isArray(response.body.data)
+    ? response.body.data
+    : [];
+  return teamMembers.map((person) => ({
+    slug: person.slug,
   }));
 }
 
 export default async function TeamMemberPage({ params }: TeamMemberPageProps) {
   const { slug } = await params;
-  const member = getTeamMemberBySlug(slug);
+  const response = await members(getProjectId());
+  console.info("[people] members response:", response);
+  const member = response.ok && response.body.success && Array.isArray(response.body.data)
+    ? response.body.data.find((item) => item.slug === slug)
+    : undefined;
 
   if (!member) {
     notFound();
@@ -77,7 +82,7 @@ export default async function TeamMemberPage({ params }: TeamMemberPageProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
               <div className="aspect-[3/4] relative overflow-hidden bg-platinum rounded-xl md:sticky md:top-32">
                 <Image 
-                  src={member.image} 
+                  src={member.displayImage || "/team/founder.jpg"}
                   alt={member.name} 
                   fill 
                   className="object-cover"
@@ -95,19 +100,6 @@ export default async function TeamMemberPage({ params }: TeamMemberPageProps) {
                   </p>
                 </div>
 
-                <div className="border-t border-platinum pt-8">
-                  <h3 className="font-serif text-xl text-charcoal mb-6">Contact</h3>
-                  <div className="space-y-4">
-                    <a href={`mailto:${member.email}`} className="flex items-center gap-3 text-warm-gray hover:text-russian-purple transition-colors break-all">
-                      <Mail className="w-5 h-5" />
-                      {member.email}
-                    </a>
-                    <a href={formatPhoneHref(member.phone)} className="flex items-center gap-3 text-warm-gray hover:text-russian-purple transition-colors">
-                      <Phone className="w-5 h-5" />
-                      {member.phone}
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

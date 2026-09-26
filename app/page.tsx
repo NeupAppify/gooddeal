@@ -4,15 +4,70 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import { Metadata } from "next";
 import PropertyCard from "@/components/PropertyCard";
-import { getFeaturedProperties } from "@/lib/properties";
+import { listEstateProperties } from "@neup/logica/estate/property/list";
 import { ArrowRight, ShieldCheck, Scale, FileText, Search, Home as HomeIcon, Building } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Good Deal, #1 Real Estate Agency",
 };
 
+const GOODDEAL_AGENCY_ID = "e432db37-4d83-452e-bd89-d269fd9314e4";
+
+function asRecord(value: unknown): Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : {};
+}
+
+function asText(value: unknown, fallback: string): string {
+  if (typeof value === "string" && value.trim()) return value;
+  if (Array.isArray(value) && typeof value[0] === "string") return value[0];
+  return fallback;
+}
+
+function formatPrice(property: Record<string, unknown>): string {
+  const pricing = Array.isArray(property.pricing) ? asRecord(property.pricing[0]) : asRecord(property.pricing);
+  const amount = typeof property.price === "number"
+    ? property.price
+    : typeof pricing.askingAmount === "number"
+      ? pricing.askingAmount
+      : typeof pricing.listed === "number"
+        ? pricing.listed
+        : null;
+
+  if (amount === null) return "Price on request";
+  if (amount >= 10_000_000) return `Rs. ${(amount / 10_000_000).toLocaleString("en-US", { maximumFractionDigits: 2 })} Cr`;
+  if (amount >= 100_000) return `Rs. ${(amount / 100_000).toLocaleString("en-US", { maximumFractionDigits: 2 })} Lakh`;
+  return `Rs. ${amount.toLocaleString("en-US")}`;
+}
+
 export default async function Home() {
-  const featuredProperties = await getFeaturedProperties();
+  const response = await listEstateProperties({
+    agencyId: GOODDEAL_AGENCY_ID,
+    fields: ["id", "slug", "title", "price", "pricing", "location", "purpose", "category", "type", "status", "images"],
+    limit: 15,
+    offset: 0,
+  });
+  const featuredProperties = response.ok && Array.isArray(response.body.properties)
+    ? response.body.properties.slice(-4).map((item) => {
+        const property = asRecord(item);
+        const location = asRecord(property.location);
+        const images = Array.isArray(property.images) ? property.images : [];
+        const firstImage = images[0];
+        return {
+          id: asText(property.id, asText(property.slug, "property")),
+          slug: asText(property.slug, asText(property.id, "")),
+          title: asText(property.title, "Property listing"),
+          price: formatPrice(property),
+          location: asText(property.location, asText(location.text, "Location available on request")),
+          purpose: asText(property.purpose, "Property"),
+          category: asText(property.category, "Listing"),
+          type: asText(property.type, "Real Estate"),
+          image: asText(firstImage, asText(asRecord(firstImage).url, "/hero.png")),
+          verified: asText(property.status, "ACTIVE").toUpperCase() === "ACTIVE",
+        };
+      })
+    : [];
 
   return (
     <div className="min-h-screen flex flex-col">
