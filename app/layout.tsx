@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
-import SharedRootLayout from "@/@neup/components/layout/RootLayout";
+import SharedRootLayout from "@neup/components/layout/RootLayout";
 import "./globals.css";
 
 const outfit = Outfit({
