@@ -36,7 +36,7 @@ export default function BlogPostPage() {
       <main className="flex-grow bg-white">
         <article className="pt-44 pb-20">
           <div className="container mx-auto max-w-[800px] px-6">
-            <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-warm-gray hover:text-russian-purple mb-8 transition-colors">
+            <Link href="/blogs" className="inline-flex items-center gap-2 text-sm text-warm-gray hover:text-russian-purple mb-8 transition-colors">
               <ArrowLeft className="w-4 h-4" /> Back to Insights
             </Link>
             

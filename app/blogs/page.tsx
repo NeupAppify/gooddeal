@@ -58,7 +58,7 @@ export default function BlogPage() {
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {articles.map((article, i) => (
-                <Link key={i} href={`/blog/${article.slug}`} className="group flex flex-col h-full">
+                <Link key={i} href={`/blogs/${article.slug}`} className="group flex flex-col h-full">
                   <div className="aspect-[16/9] bg-platinum rounded-lg mb-6 overflow-hidden border border-black/5 relative">
                      <div className="absolute inset-0 bg-russian-purple/5 group-hover:bg-russian-purple/10 transition-colors" />
                   </div>

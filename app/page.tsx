@@ -251,7 +251,7 @@ export default async function Home() {
           <div className="container mx-auto max-w-[1440px] px-6 md:px-12">
             <div className="text-left w-full mb-16">
               <h2 className="text-4xl md:text-5xl mb-6 font-semibold">
-                <Link href="/insights" className="text-charcoal hover:text-russian-purple hover:underline transition-colors">
+                <Link href="/blogs" className="text-charcoal hover:text-russian-purple hover:underline transition-colors">
                   Market Insights &gt;
                 </Link>
               </h2>
@@ -263,27 +263,31 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 {
+                  slug: "legal-pitfalls-buying-land",
                   title: "5 Legal Pitfalls to Avoid When Buying Land",
                   category: "Legal Guide",
                   date: "Oct 12, 2024",
                 },
                 {
+                  slug: "property-tax-regulations-2024",
                   title: "Understanding New Property Tax Regulations",
                   category: "Market Update",
                   date: "Sep 28, 2024",
                 },
                 {
+                  slug: "investing-in-kathmandu",
                   title: "Is it the Right Time to Invest in Kathmandu?",
                   category: "Investment",
                   date: "Sep 15, 2024",
                 },
                 {
+                  slug: "nrn-property-buying-guide",
                   title: "How to Verify a Property Before You Buy",
                   category: "Property Guide",
                   date: "Sep 05, 2024",
                 },
               ].map((post, i) => (
-                <Link key={i} href="/insights/1" className="group block">
+                <Link key={i} href={`/blogs/${post.slug}`} className="group block">
                   <div className="aspect-[16/9] bg-white rounded-lg mb-4 overflow-hidden border border-black/5">
                     <div className="w-full h-full bg-platinum group-hover:scale-105 transition-transform duration-700" />
                   </div>
