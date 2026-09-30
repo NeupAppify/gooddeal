@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 import PropertyCard from "@/components/PropertyCard";
 import { listEstateProperties } from "@neup/logica/estate/property/list";
+import { getEnvVariable } from "@neup/core/helpers/env";
+import { logica } from "@neup/logica";
 import { ArrowRight, ShieldCheck, Scale, FileText, Search, Home as HomeIcon, Building } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -42,6 +44,8 @@ function formatPrice(property: Record<string, unknown>): string {
 }
 
 export default async function Home() {
+  const projectId = getEnvVariable("NEUP_SITES_PROJECT_ID", true);
+  if (!projectId) throw new Error("NEUP_SITES_PROJECT_ID is required to load articles.");
   const response = await listEstateProperties({
     agencyId: GOODDEAL_AGENCY_ID,
     fields: ["id", "slug", "title", "price", "pricing", "location", "purpose", "category", "type", "status", "images"],
@@ -67,6 +71,10 @@ export default async function Home() {
           verified: asText(property.status, "ACTIVE").toUpperCase() === "ACTIVE",
         };
       })
+    : [];
+  const articlesResponse = await logica.articles(projectId).get();
+  const articles = articlesResponse.ok && articlesResponse.body.success && Array.isArray(articlesResponse.body.data)
+    ? articlesResponse.body.data.slice(0, 4)
     : [];
 
   return (
@@ -261,40 +269,15 @@ export default async function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                {
-                  slug: "legal-pitfalls-buying-land",
-                  title: "5 Legal Pitfalls to Avoid When Buying Land",
-                  category: "Legal Guide",
-                  date: "Oct 12, 2024",
-                },
-                {
-                  slug: "property-tax-regulations-2024",
-                  title: "Understanding New Property Tax Regulations",
-                  category: "Market Update",
-                  date: "Sep 28, 2024",
-                },
-                {
-                  slug: "investing-in-kathmandu",
-                  title: "Is it the Right Time to Invest in Kathmandu?",
-                  category: "Investment",
-                  date: "Sep 15, 2024",
-                },
-                {
-                  slug: "nrn-property-buying-guide",
-                  title: "How to Verify a Property Before You Buy",
-                  category: "Property Guide",
-                  date: "Sep 05, 2024",
-                },
-              ].map((post, i) => (
-                <Link key={i} href={`/blogs/${post.slug}`} className="group block">
+              {articles.map((post) => (
+                <Link key={post.slug} href={`/blogs/${post.slug}`} className="group block">
                   <div className="aspect-[16/9] bg-white rounded-lg mb-4 overflow-hidden border border-black/5">
                     <div className="w-full h-full bg-platinum group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <div className="flex items-center gap-3 text-xs text-warm-gray mb-2">
-                    <span className="text-russian-purple font-medium">{post.category}</span>
+                    <span className="text-russian-purple font-medium">{post.tags[0] ?? "Insight"}</span>
                     <span>•</span>
-                    <span>{post.date}</span>
+                    <span>{post.writtenAt ? new Date(post.writtenAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : ""}</span>
                   </div>
                   <h3 className="text-xl font-serif leading-tight group-hover:text-russian-purple transition-colors">
                     {post.title}
